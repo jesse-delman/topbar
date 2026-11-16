@@ -26,7 +26,8 @@ One download. No installer, no account, no ads. It updates itself.
 | **Widgets** | Clocks, weather, calendar, notes, music, system stats, photos, timers and more, right on your desktop. Drag them anywhere. |
 | **Notes** | Tabs, checklists, bold, headings, links and spoilers, like Discord. |
 | **Screenshots** | Press **Print Screen**. It's copied right away. Click the little notice to mark it up. |
-| **Shake menu** | Shake your mouse to get a ring of quick actions, wherever you are. |
+| **Guitar Tabs** | Turn a song, whatever's playing, or your own playing into guitar tab. Type **guitar tabs** in Search. |
+| **Shake menu** | Wiggle the mouse quickly in one spot for a ring of quick actions. |
 | **Taskbar styling** | Make the Windows taskbar clear, blurred, frosted, or a floating island. |
 | **Built-in apps** | Calendar, reminders, clock and timers, calculator, screen recorder, mic tools, and a looper. |
 
