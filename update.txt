@@ -1,7 +1,7 @@
-version=9.19
+version=9.20
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=a4de3226356aab5a186a35bcb595e479f3dee4f70c24ada1c8b7bf8cb01e325f
-notes=New Tuner for every instrument and tuning.
+sha256=009755c5cd0c84920ac271c481da12c80441acce92ca8f260dad0e5824ab5eed
+notes=Phone Link: files and copied text between phone and PC.
 new=A tuner for every instrument
 new=Any tuning, or make your own
 new=Ignores wind, hiss and clicks
