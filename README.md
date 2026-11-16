@@ -40,10 +40,13 @@ Everything can be changed in **TopBar Settings** (click the logo in the top left
 ## Ask for anything
 
 TopBar is meant to be the one app you'd never skip.
-**If you want something, ask. No limits, no matter what it is.**
+**Send feedback any time, about anything. No limits, no matter what it is:** a feature, a whole new app, a tiny fix, a bug, a question.
 
-Open **Help › Feedback** (or right-click the bar) and write it down.
-Replies show up right inside TopBar.
+- **Every message is read** by the developer.
+- **Updates based on it usually come out within hours**, and they install by themselves.
+- **You get a reply right inside TopBar.**
+
+Open **Help › Feedback** (or right-click the bar, or type **feedback** in Search).
 
 ---
 

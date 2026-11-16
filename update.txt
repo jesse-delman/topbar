@@ -1,10 +1,5 @@
-version=9.20
+version=9.21
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=82cc17935a087479d0a1a8ed6eef911f52ccca6c5d086b1559f5cf51e83a4d83
-notes=Phone Link: files and copied text between phone and PC.
-new=Files between your phone and PC
-new=No app on the phone
-new=Fast and private
-new=Copied text, both ways
-new=Send from anywhere
-fix=A timer menu item could be sent to Guitar Tabs instead
+sha256=def6cb765c924c66e2a019df43292a85ad88d5eb1ac55b2ca3908337a10593c3
+notes=Feedback: ask for anything, any time
+new=Ask for anything, any time
