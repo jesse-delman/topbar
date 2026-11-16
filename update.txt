@@ -1,5 +1,11 @@
-version=9.21
+version=9.22
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=def6cb765c924c66e2a019df43292a85ad88d5eb1ac55b2ca3908337a10593c3
-notes=Feedback: ask for anything, any time
-new=Ask for anything, any time
+sha256=b67bf1fbca70b4a5b3f1af5a0232a10122b04b2910139a3ec9be34e5d932281d
+notes=Studio: video, photo and audio editor; Spotify follows you to the PC
+new=A new editor for videos, photos and audio
+new=Trim, split and cut out the quiet parts
+new=Looks, LUTs and Apple Log
+new=Save at any size, with the size shown first
+new=Full-quality frames and audio files
+new=Photos too
+new=Music follows you to the PC

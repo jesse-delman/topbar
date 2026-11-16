@@ -29,6 +29,7 @@ One download. No installer, no account, no ads. It updates itself.
 | **Guitar Tabs** | Turn any song, video, link or your own playing into tab or chords, Songsterr style. It separates the instruments and each guitar first, then tabs the one you pick. Guitar, bass, ukulele and more, any tuning. Type **guitar tabs** in Search. |
 | **Phone Link** | Send any file between your phone and PC at full quality, plus copied text. No phone app: scan a QR code. Type **phone** in Search. |
 | **Tuner** | Tune guitar, bass, ukulele, violin and more, in any tuning. Ignores background noise. Type **tuner** in Search. |
+| **Studio** | Edit videos, photos and audio: trim, cut out the quiet parts, Apple Log and LUTs, save frames at full quality, and save at any size with the file size shown first. Type **studio** or **edit video** in Search. |
 | **Shake menu** | Wiggle the mouse quickly in one spot for a ring of quick actions. |
 | **Dock** | An optional glass dock that replaces the Windows taskbar: pinned and open apps, floating or full width, auto-hide. |
 | **Built-in apps** | Calendar, reminders, clock and timers, calculator, screen recorder, mic tools, and a looper. |
