@@ -1,0 +1,2 @@
+# Replies to feedback. One per line:  REPLYCODE | your message
+# The reply code is in each Discord feedback message. Use \n for a new line.
