@@ -26,7 +26,7 @@ One download. No installer, no account, no ads. It updates itself.
 | **Widgets** | Clocks, weather, calendar, notes, music, system stats, photos, timers and more, right on your desktop. Drag them anywhere. |
 | **Notes** | Tabs, checklists, bold, headings, links and spoilers, like Discord. |
 | **Screenshots** | Press **Print Screen**. It's copied right away. Click the little notice to mark it up. |
-| **Guitar Tabs** | Turn any song, video, link or your own playing into tab or chords, Songsterr style. Optional AI listening takes out the singer and drums first. Guitar, bass, ukulele and more, any tuning. Type **guitar tabs** in Search. |
+| **Guitar Tabs** | Turn any song, video, link or your own playing into tab or chords, Songsterr style. It separates the instruments and each guitar first, then tabs the one you pick. Guitar, bass, ukulele and more, any tuning. Type **guitar tabs** in Search. |
 | **Shake menu** | Wiggle the mouse quickly in one spot for a ring of quick actions. |
 | **Dock** | An optional glass dock that replaces the Windows taskbar: pinned and open apps, floating or full width, auto-hide. |
 | **Built-in apps** | Calendar, reminders, clock and timers, calculator, screen recorder, mic tools, and a looper. |
