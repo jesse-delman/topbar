@@ -1,6 +1,6 @@
 version=9.20
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=009755c5cd0c84920ac271c481da12c80441acce92ca8f260dad0e5824ab5eed
+sha256=82cc17935a087479d0a1a8ed6eef911f52ccca6c5d086b1559f5cf51e83a4d83
 notes=Phone Link: files and copied text between phone and PC.
 new=A tuner for every instrument
 new=Any tuning, or make your own
