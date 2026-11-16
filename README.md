@@ -28,7 +28,7 @@ One download. No installer, no account, no ads. It updates itself.
 | **Screenshots** | Press **Print Screen**. It's copied right away. Click the little notice to mark it up. |
 | **Guitar Tabs** | Turn a song, whatever's playing, or your own playing into guitar tab. Type **guitar tabs** in Search. |
 | **Shake menu** | Wiggle the mouse quickly in one spot for a ring of quick actions. |
-| **Taskbar styling** | Make the Windows taskbar clear, blurred, frosted, or a floating island. |
+| **Dock** | An optional glass dock that replaces the Windows taskbar: pinned and open apps, floating or full width, auto-hide. |
 | **Built-in apps** | Calendar, reminders, clock and timers, calculator, screen recorder, mic tools, and a looper. |
 
 Everything can be changed in **TopBar Settings** (click the logo in the top left).
