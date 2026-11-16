@@ -1,8 +1,8 @@
-version=9.10
+version=9.11
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=c942669556e19d867e61eb0e4c5a74f98605a1340198f224234a0f19fa2e41f6
-notes=Style the Windows taskbar (clear, blur, frosted, island). Smoother tutorial that clears your desktop first.
-new=Style the Windows taskbar: clear, blurred, frosted or tinted
-new=A different taskbar look while a window is maximized
-new=Floating rounded island taskbar
-fix=Tutorial is smooth and shows your desktop first
+sha256=8503cc40780921b9f183873bbe467b0eb4b0ee32b510c11dc8f36caa717c2fc8
+notes=Rename note tabs, minimize windows into the bar, long words in notes wrap, weather window buttons on hover.
+new=Rename note tabs: double-click a tab, or right-click > Rename This Tab
+new=The yellow button tucks a window into the bar; click it to bring it back
+fix=Long words in notes wrap instead of getting cut off
+fix=Weather window buttons show their symbols on hover
