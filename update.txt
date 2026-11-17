@@ -1,8 +1,6 @@
-version=9.26
+version=9.27
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=e5b4b180826778ab0e4f1e8354a820de70eaa13ec012cff8313eba5803e38858
-notes=Full-refresh-rate animations, smoother clearer tour, any screenshot key
-new=Runs at your screen's full speed
-new=Clearer and smoother
-new=Your usual key works
-fix=The tour no longer skips frames or jumps
+sha256=8a703591193623c11cc78b58a8533962b3c19772de9dba9601de6cc8d90caa91
+notes=Text never cut off
+new=Text never gets cut off
+fix=The update window's second line was cut off
