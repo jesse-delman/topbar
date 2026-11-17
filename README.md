@@ -26,9 +26,10 @@ One download. No installer, no account, no ads. It updates itself.
 | **Widgets** | Clocks, weather, calendar, notes, music, system stats, photos, timers and more, right on your desktop. Drag them anywhere. |
 | **Notes** | Tabs, checklists, bold, headings, links and spoilers, like Discord. |
 | **Screenshots** | Press **Print Screen**. It's copied right away. Click the little notice to mark it up. |
-| **Guitar Tabs** | Turn any song, video, link or your own playing into tab or chords, Songsterr style. It separates the instruments and each guitar first, then tabs the one you pick. Guitar, bass, ukulele and more, any tuning. Type **guitar tabs** in Search. |
+| **Guitar Tabs** | Turn any song, video, link or your own playing into tab or chords, Songsterr style. It separates the instruments and each guitar first, then hears every note with Spotify's open-source Basic Pitch, and tabs the part you pick. Guitar, bass, ukulele and more, any tuning. Type **guitar tabs** in Search. |
 | **Phone Link** | Send any file between your phone and PC at full quality, plus copied text. No phone app: scan a QR code. Type **phone** in Search. |
 | **Tuner** | Tune guitar, bass, ukulele, violin and more, in any tuning. Ignores background noise. Type **tuner** in Search. |
+| **Clock Store** | Hundreds of free Rainmeter clocks from GitHub, with previews. One click puts one on your desktop. Type **clock store** in Search. |
 | **Studio** | Edit videos, photos and audio: trim, cut out the quiet parts, Apple Log and LUTs, save frames at full quality, and save at any size with the file size shown first. Type **studio** or **edit video** in Search. |
 | **Shake menu** | Wiggle the mouse quickly in one spot for a ring of quick actions. |
 | **Dock** | An optional glass dock that replaces the Windows taskbar: pinned and open apps, floating or full width, auto-hide. |
@@ -65,3 +66,9 @@ To check right now, type **update** in Search, or go to **Settings › About**.
 - **Light**: small, and uses almost no CPU.
 - **Your data** stays on your PC, in `%APPDATA%\TopBar`.
 - **Remove it**: quit TopBar from its menu and delete `TopBar.exe`.
+
+## Credits
+
+- Guitar Tabs uses [Basic Pitch](https://github.com/spotify/basic-pitch) by Spotify (Apache License 2.0), built in.
+- Instrument splitting uses Demucs (htdemucs), downloaded on first use.
+- Clock Store skins are made by their own authors and shared on GitHub.
