@@ -1,8 +1,8 @@
-version=9.25
+version=9.26
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=57673b494cc2e6e75357dc3e126de753e83fc557e2bb73d566d8b0944a416642
-notes=Tour rebuilt: readable, smooth, consistent
-new=Rebuilt to feel like a film
-new=Matches the real thing
-fix=The tour never goes off screen or jumps between steps
-fix="What's new" no longer pops up over the tour
+sha256=e5b4b180826778ab0e4f1e8354a820de70eaa13ec012cff8313eba5803e38858
+notes=Full-refresh-rate animations, smoother clearer tour, any screenshot key
+new=Runs at your screen's full speed
+new=Clearer and smoother
+new=Your usual key works
+fix=The tour no longer skips frames or jumps
