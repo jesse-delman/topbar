@@ -1,6 +1,9 @@
-version=9.27
+version=9.28
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=8a703591193623c11cc78b58a8533962b3c19772de9dba9601de6cc8d90caa91
-notes=Text never cut off
-new=Text never gets cut off
-fix=The update window's second line was cut off
+sha256=daee9b69120e193d063a6e4a1a572a914f30d00e5327404308960cb3db1bc130
+notes=Click anything and use every shortcut during the tour; every screenshot key opens TopBar's; easier-to-read tour
+mandatory=1
+new=Every screenshot key opens TopBar's
+new=Easier to read
+fix=You can click anything and use every shortcut while the tour is open
+fix=The tour no longer shows up in your screenshots
