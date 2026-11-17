@@ -1,7 +1,8 @@
-version=9.24
+version=9.25
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=59319f68b844b5165fd6cd5b1a58402ab1e50483eacebf84b3c5c44aaf15aae2
-notes=New interactive tour, simpler feedback presets, roomier shake menu
-new=A brand new tour
-new=Simpler choices
-fix=The mouse-shake buttons have clear space between them
+sha256=57673b494cc2e6e75357dc3e126de753e83fc557e2bb73d566d8b0944a416642
+notes=Tour rebuilt: readable, smooth, consistent
+new=Rebuilt to feel like a film
+new=Matches the real thing
+fix=The tour never goes off screen or jumps between steps
+fix="What's new" no longer pops up over the tour
