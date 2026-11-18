@@ -1,7 +1,9 @@
-version=10.1.3
+version=10.1.4
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=3c2d6f436959e5060fc152ebb7c37216e1d412260189cede4151575e3edad17b
-notes=Beta 1: real frosted glass on the menu bar, opens at Windows startup
+sha256=90fb31db9affa421273676328b3f4da041d1cded6a05ab64cdcec8220b154d36
+notes=Taskbar shows every app incl. TopBar's own, Alt+Space goes to TopBar, feedback replies from Discord, manifest + fuller file info
+new=Every app on the taskbar
+new=Alt + Space is TopBar's
 new=TopBar Beta 1
 new=TopBar's own taskbar, on for everyone
 new=Rebuilt notifications
