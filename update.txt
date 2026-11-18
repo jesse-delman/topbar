@@ -1,7 +1,8 @@
-version=10.1.4
+version=11.0.0
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=90fb31db9affa421273676328b3f4da041d1cded6a05ab64cdcec8220b154d36
-notes=Taskbar shows every app incl. TopBar's own, Alt+Space goes to TopBar, feedback replies from Discord, manifest + fuller file info
+sha256=add2774127d6ca286b2364538ba588d6a523755e62e15470bdbbcba49b4c0b1f
+notes=Versions now shown as TopBar Beta 1.0.0
+new=TopBar Beta 1.0.0
 new=Every app on the taskbar
 new=Alt + Space is TopBar's
 new=TopBar Beta 1
