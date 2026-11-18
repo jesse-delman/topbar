@@ -126,26 +126,36 @@ async def send_reply(code: str, text: str) -> str:
     return "replies.txt kept changing, try again"
 
 
-# ---------------------------------------------------------------- updates itself from GitHub (checks at start and every 10 minutes)
-RAW = f"https://raw.githubusercontent.com/{REPO}/main/bot/"
+# ---------------------------------------------------------------- updates itself from GitHub within seconds of a change
+# Asks GitHub every 5 seconds "has the bot folder changed?" with an ETag: an unchanged answer is free (doesn't use up the token's limit).
+API = f"https://api.github.com/repos/{REPO}"
+GH = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
+_etag, _sha = None, None
 
 
-async def self_update() -> bool:
-    """Downloads the newest bot files; if anything changed, restarts into them. Returns False when already up to date."""
+async def self_update(force=False) -> bool:
     import subprocess
-    changed = False
-    async with aiohttp.ClientSession() as s:
+    global _etag, _sha
+    async with aiohttp.ClientSession(headers=GH) as s:
+        h = {} if force or not _etag else {"If-None-Match": _etag}
+        async with s.get(f"{API}/commits", params={"path": "bot", "per_page": "1"}, headers=h) as r:
+            if r.status != 200:
+                return False
+            _etag = r.headers.get("ETag")
+            sha = (await r.json())[0]["sha"]
+        if sha == _sha and not force:
+            return False
+        first = _sha is None
+        _sha = sha
+        changed = False
         for name in ("requirements.txt", "start.bat", "stop.bat", "README.md", "bot.py"):
-            try:
-                async with s.get(RAW + name, headers={"Cache-Control": "no-cache"}) as r:
-                    if r.status != 200:
-                        continue
-                    new = await r.read()
-            except Exception:
-                continue
+            async with s.get(f"{API}/contents/bot/{name}", params={"ref": sha}, headers={"Accept": "application/vnd.github.raw"}) as r:
+                if r.status != 200:
+                    continue
+                new = await r.read()
             path = os.path.join(HERE, name)
             old = open(path, "rb").read() if os.path.exists(path) else b""
-            if new == old:
+            if new.replace(b"\r\n", b"\n") == old.replace(b"\r\n", b"\n"):
                 continue
             if name == "bot.py":
                 try:
@@ -162,7 +172,7 @@ async def self_update() -> bool:
         print("restarting into the new version")
         await client.close()
         os.execv(sys.executable, [sys.executable, os.path.join(HERE, "bot.py")])
-    return False
+    return changed
 
 
 async def update_loop():
@@ -172,7 +182,7 @@ async def update_loop():
             await self_update()
         except Exception as ex:
             print("update check failed:", ex)
-        await asyncio.sleep(600)
+        await asyncio.sleep(5)
 
 
 @client.event
@@ -440,7 +450,7 @@ async def defaults(inter: discord.Interaction, format: app_commands.Choice[str] 
 @tree.command(name="update", description="Get the newest version of this bot now")
 async def update_cmd(inter: discord.Interaction):
     await inter.response.send_message("Checking\u2026 if there's a new version the bot restarts in a few seconds.", ephemeral=True)
-    await self_update()
+    await self_update(force=True)
 
 
 @tree.command(name="settings", description="Which settings people change the most")
