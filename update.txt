@@ -1,7 +1,7 @@
-version=11.0.4
+version=11.0.5
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=601f828d3f7222060cfe3206c39db15abfbb73fe378c6a01725c478b40d9b966
-notes=Saved tab library + auto-reload, MusicXML export, Spotify move-to-PC fix
+sha256=d29dc07da47134e720686e94c1fcc66a976ef1a1a750e21121f6ecbf7dedb9d8
+notes=Smooth scrolling everywhere, tooltips, Win key Start + pins/options, live wallpaper, glass dithering, Studio 10-bit fix, icon styles
 new=Your tabs are saved
 new=Guitar Pro export
 new=TopBar's own Start menu
