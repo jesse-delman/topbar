@@ -1,7 +1,8 @@
-version=11.0.6
+version=11.0.7
 exe=https://raw.githubusercontent.com/jesse-delman/topbar/main/TopBar.exe
-sha256=bcda9fb09a7f3e74f826e47138b479dde1898a17347245eaf643d4e7c9de6874
-notes=New Apple-style icon set, Start rebuild, live tuner number, Recycle Bin safety fix
+sha256=42e47afed0c31ec8d44369ec3d143834abcb16c0ab43be913031aa87321e92a5
+notes=Guitar Tabs uses the supplied Songsterr-style pipeline (embedded Python, one-time setup); MusicXML string order fix
+new=New tab engine
 new=All-new icons
 new=A better Start
 new=Live number on the needle
