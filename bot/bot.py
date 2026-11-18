@@ -2,13 +2,16 @@
 
 - Reply to a feedback message in Discord (normal Discord reply) -> the person gets it in TopBar.
 - /reply code message   -> same thing, by reply code.
-- /export               -> every feedback message as a spreadsheet (CSV) + a readable summary.
+- /export               -> feedback, filtered how you like (who, type, days, unreplied...), as short text for Claude,
+                           a spreadsheet, or a full report, with screenshots in a zip.
+- /defaults             -> what /export gives you when you don't pick anything.
 - /settings             -> which settings people change the most.
 
 Replies are written to replies.txt in the GitHub repo, which TopBar already checks.
 Setup: see README.md in this folder. Secrets come from environment variables only.
 """
-import base64, csv, io, os, re, sys
+import base64, csv, io, json, os, re, sys, zipfile
+from datetime import datetime, timedelta, timezone
 from collections import Counter
 
 # runs hidden in the background: keys come from keys.txt next to this file, errors go to bot.log
@@ -78,7 +81,10 @@ def parse(msg: discord.Message):
         "message": e.description or "", "version": ver,
         "windows": field(e, "Windows"), "code": code,
         "was_doing": field(e, "Was doing"), "setup": field(e, "Setup"),
-        "changes": changes, "link": msg.jump_url,
+        "changes": changes, "link": msg.jump_url, "id": msg.id, "dt": msg.created_at,
+        "pc": field(e, "PC"), "crash": field(e, "Crash details"),
+        "images": [a for a in msg.attachments if (a.content_type or "").startswith("image/") or a.filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".webp"))],
+        "longtext": next((a for a in msg.attachments if a.filename == "message.txt"), None),
     }
 
 
@@ -141,6 +147,8 @@ async def on_message(msg: discord.Message):
     if not p:
         return
     err = await send_reply(p["code"], msg.content)
+    if not err:
+        mark_replied(p["id"])
     if err:
         await msg.reply(f"Couldn't send: {err}", mention_author=False)
     else:
@@ -153,43 +161,230 @@ async def reply(inter: discord.Interaction, code: str, message: str):
         return await inter.response.send_message("Only the developer can reply.", ephemeral=True)
     await inter.response.defer(ephemeral=True)
     err = await send_reply(code, message)
+    if not err:
+        st = load_state(); st.setdefault("replied_codes", []).append(code.strip("` ").upper()); save_state(st)
     await inter.followup.send(f"Couldn't send: {err}" if err else f"Sent to `{code}`.", ephemeral=True)
 
 
-@tree.command(description="Export all feedback as a spreadsheet and a summary")
-async def export(inter: discord.Interaction):
-    await inter.response.defer(ephemeral=True)
-    fb = await all_feedback()
-    if not fb:
-        return await inter.followup.send("No feedback found.", ephemeral=True)
 
-    sheet = io.StringIO()
-    w = csv.writer(sheet)
-    w.writerow(["When", "Type", "From", "Title", "What they said", "Version", "Windows",
-                "Reply code", "Was doing", "Settings changed (count)", "Settings changed", "Link"])
+# ---------------------------------------------------------------- saved settings and what's been seen / replied
+STATE = os.path.join(HERE, "state.json")
+DEFAULTS = {"format": "claude", "settings": True, "pc": False, "screenshots": True, "crash": True,
+            "newest": 0, "days": 0, "unreplied": False, "new_only": False, "max_chars": 1500}
+
+
+def load_state():
+    try:
+        return json.load(open(STATE, encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def save_state(st):
+    json.dump(st, open(STATE, "w", encoding="utf-8"), indent=1, default=str)
+
+
+def mark_replied(mid):
+    st = load_state(); st.setdefault("replied_ids", []).append(mid); save_state(st)
+
+
+def is_replied(p, st):
+    return p["id"] in st.get("replied_ids", []) or p["code"].upper() in st.get("replied_codes", [])
+
+
+def opts():
+    d = dict(DEFAULTS); d.update(load_state().get("defaults", {})); return d
+
+
+FORMATS = [app_commands.Choice(name="Short text for Claude (fewest tokens)", value="claude"),
+           app_commands.Choice(name="Spreadsheet (CSV)", value="csv"),
+           app_commands.Choice(name="Full report (Markdown)", value="full"),
+           app_commands.Choice(name="Everything (all three)", value="all")]
+KINDS = [app_commands.Choice(name=k, value=k) for k in ("Bug", "Idea", "Question", "Other", "Crash")]
+
+
+def change_text(p):
+    return "; ".join(f"{n} {a}→{b}" if a is not None else n for n, a, b in p["changes"])
+
+
+def clip(t, n):
+    t = (t or "").strip()
+    return t if not n or len(t) <= n else t[:n].rstrip() + "…"
+
+
+def img_name(p, i, a):
+    ext = os.path.splitext(a.filename)[1] or ".png"
+    return f"screenshots/{p['dt'].strftime('%Y-%m-%d_%H%M')}_{p['code']}" + (f"_{i+1}" if i else "") + ext
+
+
+def build_claude(fb, o):
+    # one compact block per message: only what helps, no labels repeated per field
+    out = [f"TopBar feedback, {len(fb)} messages. Format: date | type | who (reply code) | version",
+           ""]
     for p in fb:
-        ch = "; ".join(f"{n} {a}\u2192{b}" if a is not None else n for n, a, b in p["changes"])
-        w.writerow([p["when"], p["kind"], p["who"], p["title"], p["message"], p["version"], p["windows"],
-                    p["code"], p["was_doing"], len(p["changes"]), ch, p["link"]])
+        out.append(f"{p['dt'].strftime('%m-%d')} | {p['kind']} | {p['who']} ({p['code']}) | {p['version']}")
+        if p["title"]:
+            out.append("Title: " + p["title"])
+        out.append(clip(p["full_text"], o["max_chars"]))
+        if p["was_doing"] and p["was_doing"] != "—":
+            out.append("Doing: " + p["was_doing"])
+        if o["settings"] and p["changes"]:
+            out.append(f"Settings ({len(p['changes'])}): " + change_text(p))
+        if o["pc"]:
+            out.append("PC: " + " ".join((p["windows"] + " " + p["pc"] + " " + p["setup"]).split()))
+        if o["crash"] and p["crash"]:
+            out.append("Crash: " + " ".join(p["crash"].strip("`").split()))
+        if o["screenshots"] and p["images"]:
+            out.append("Screenshot: " + ", ".join(img_name(p, i, a) for i, a in enumerate(p["images"])))
+        out.append("")
+    return "\n".join(out)
 
+
+def build_csv(fb, o):
+    sheet = io.StringIO(); w = csv.writer(sheet)
+    cols = ["When", "Type", "From", "Reply code", "Version", "Title", "What they said", "Was doing", "Replied"]
+    if o["settings"]: cols += ["Settings changed (count)", "Settings changed"]
+    if o["pc"]: cols += ["Windows", "PC", "Setup"]
+    if o["crash"]: cols += ["Crash"]
+    if o["screenshots"]: cols += ["Screenshots"]
+    w.writerow(cols + ["Link"])
+    for p in fb:
+        r = [p["when"], p["kind"], p["who"], p["code"], p["version"], p["title"], p["full_text"], p["was_doing"], "yes" if p["replied"] else ""]
+        if o["settings"]: r += [len(p["changes"]), change_text(p)]
+        if o["pc"]: r += [p["windows"], p["pc"], p["setup"]]
+        if o["crash"]: r += [p["crash"]]
+        if o["screenshots"]: r += [", ".join(img_name(p, i, a) for i, a in enumerate(p["images"]))]
+        w.writerow(r + [p["link"]])
+    return sheet.getvalue()
+
+
+def build_full(fb, o):
     kinds = Counter(p["kind"] for p in fb)
-    people = len({p["code"] for p in fb})
-    top = Counter(n for p in fb for n, _, _ in p["changes"]).most_common(25)
-    md = [f"# TopBar feedback ({len(fb)} messages from {people} people)", ""]
+    md = [f"# TopBar feedback ({len(fb)} messages from {len({p['code'] for p in fb})} people)", ""]
     md += [f"- {k}: {n}" for k, n in kinds.most_common()]
-    md += ["", "## Settings changed most", ""] + [f"- {n} \u2014 {c}" for n, c in top]
-    md += ["", "## Everything people said", ""]
+    if o["settings"]:
+        top = Counter(n for p in fb for n, _, _ in p["changes"]).most_common(25)
+        md += ["", "## Settings changed most", ""] + [f"- {n} — {c}" for n, c in top]
+    md += ["", "## Messages", ""]
     for p in fb:
-        md += [f"### {p['when']} \u00b7 {p['kind']} from {p['who']} \u00b7 `{p['code']}`",
-               f"**{p['title']}**" if p["title"] else "", p["message"], "",
-               f"Version {p['version']} \u00b7 Windows {p['windows']} \u00b7 {len(p['changes'])} settings changed", ""]
-        md += [f"  - {n}" + (f": {a} \u2192 {b}" if a is not None else "") for n, a, b in p["changes"]]
-        md += [""]
+        md += [f"### {p['when']} · {p['kind']} from {p['who']} · `{p['code']}`" + (" · replied" if p["replied"] else ""), ""]
+        if p["title"]: md += [f"**{p['title']}**", ""]
+        md += [p["full_text"], "", f"Version {p['version']} · Windows {p['windows']} · doing: {p['was_doing']}", ""]
+        if o["settings"]:
+            md += [f"{len(p['changes'])} settings changed"] + [f"  - {n}" + (f": {a} → {b}" if a is not None else "") for n, a, b in p["changes"]] + [""]
+        if o["pc"]: md += ["PC: " + " · ".join(x for x in (p["pc"], p["setup"]) if x).replace("\n", " · "), ""]
+        if o["crash"] and p["crash"]: md += ["Crash:", p["crash"], ""]
+        if o["screenshots"]:
+            md += [f"![screenshot]({img_name(p, i, a)})" for i, a in enumerate(p["images"])] + [""]
+    return "\n".join(md)
 
-    files = [discord.File(io.BytesIO(sheet.getvalue().encode("utf-8-sig")), "topbar-feedback.csv"),
-             discord.File(io.BytesIO("\n".join(md).encode("utf-8")), "topbar-feedback.md")]
-    await inter.followup.send(f"{len(fb)} messages from {people} people.", files=files, ephemeral=True)
 
+async def gather(o, kind=None, person=None, search=None, version=None):
+    st = load_state(); fb = await all_feedback()
+    if o["days"]:
+        since = datetime.now(timezone.utc) - timedelta(days=o["days"]); fb = [p for p in fb if p["dt"] >= since]
+    if o["new_only"] and st.get("last_export"):
+        last = datetime.fromisoformat(st["last_export"]); fb = [p for p in fb if p["dt"] > last]
+    if kind: fb = [p for p in fb if kind.lower() in p["kind"].lower() or (kind == "Crash" and p["crash"])]
+    if person:
+        q = person.lower().strip("` "); fb = [p for p in fb if q in p["who"].lower() or q == p["code"].lower()]
+    if version: fb = [p for p in fb if version.lower() in p["version"].lower()]
+    for p in fb: p["replied"] = is_replied(p, st)
+    if o["unreplied"]: fb = [p for p in fb if not p["replied"]]
+    if search:
+        q = search.lower(); fb = [p for p in fb if q in (p["title"] + " " + p["message"]).lower()]
+    if o["newest"]: fb = fb[-o["newest"]:]
+    async with aiohttp.ClientSession() as s:   # long messages come as message.txt: use the whole text
+        for p in fb:
+            p["full_text"] = p["message"]
+            if p["longtext"]:
+                try:
+                    async with s.get(p["longtext"].url) as r: p["full_text"] = (await r.text()).strip()
+                except Exception: pass
+    return fb
+
+
+@tree.command(description="Export feedback. Anything you leave empty uses your /defaults")
+@app_commands.describe(
+    format="What you get back", newest="Only the newest N messages", days="Only the last N days",
+    new_only="Only what came in since your last export", unreplied="Only messages you haven't replied to",
+    kind="Only one type", person="Only one person (name or reply code)", search="Only messages containing this text",
+    version="Only this version (e.g. 1.0.1)", settings="Include which settings they changed", pc="Include PC / Windows / setup info",
+    screenshots="Include screenshots (zip)", crash="Include crash details", max_chars="Cut each message to this many characters in the Claude text (0 = never)")
+@app_commands.choices(format=FORMATS, kind=KINDS)
+async def export(inter: discord.Interaction, format: app_commands.Choice[str] = None, newest: int = None, days: int = None,
+                 new_only: bool = None, unreplied: bool = None, kind: app_commands.Choice[str] = None, person: str = None,
+                 search: str = None, version: str = None, settings: bool = None, pc: bool = None, screenshots: bool = None,
+                 crash: bool = None, max_chars: int = None):
+    await inter.response.defer(ephemeral=True)
+    o = opts()
+    for k, v in (("format", format.value if format else None), ("newest", newest), ("days", days), ("new_only", new_only),
+                 ("unreplied", unreplied), ("settings", settings), ("pc", pc), ("screenshots", screenshots),
+                 ("crash", crash), ("max_chars", max_chars)):
+        if v is not None: o[k] = v
+    fb = await gather(o, kind.value if kind else None, person, search, version)
+    if not fb:
+        return await inter.followup.send("No feedback matches that.", ephemeral=True)
+
+    texts = {}
+    if o["format"] in ("claude", "all"): texts["topbar-feedback.txt"] = build_claude(fb, o)
+    if o["format"] in ("csv", "all"): texts["topbar-feedback.csv"] = "﻿" + build_csv(fb, o)
+    if o["format"] in ("full", "all"): texts["topbar-feedback.md"] = build_full(fb, o)
+
+    # screenshots: downloaded and zipped with the text, split into parts under Discord's upload limit
+    files, LIMIT = [], 9_500_000
+    shots = [(img_name(p, i, a), a) for p in fb for i, a in enumerate(p["images"])] if o["screenshots"] else []
+    if shots:
+        zips, cur, size = [], None, 0
+        def new_zip():
+            b = io.BytesIO(); z = zipfile.ZipFile(b, "w", zipfile.ZIP_DEFLATED); zips.append((b, z)); return z
+        cur = new_zip()
+        for n, t in texts.items(): cur.writestr(n, t)
+        size = sum(len(t) for t in texts.values()) // 3
+        async with aiohttp.ClientSession() as s:
+            for name, a in shots:
+                try:
+                    async with s.get(a.url) as r: data = await r.read()
+                except Exception: continue
+                if size + len(data) > LIMIT and size > 0:
+                    cur = new_zip(); size = 0
+                cur.writestr(name, data); size += len(data)
+        for b, z in zips: z.close()
+        for i, (b, z) in enumerate(zips):
+            files.append(discord.File(io.BytesIO(b.getvalue()), "topbar-feedback.zip" if len(zips) == 1 else f"topbar-feedback-part{i+1}.zip"))
+    else:
+        files = [discord.File(io.BytesIO(t.encode("utf-8")), n) for n, t in texts.items()]
+
+    st = load_state(); st["last_export"] = datetime.now(timezone.utc).isoformat(); save_state(st)
+    words = sum(len(t.split()) for n, t in texts.items() if n.endswith(".txt"))
+    info = f"{len(fb)} messages from {len({p['code'] for p in fb})} people" + (f", {len(shots)} screenshots" if shots else "") + (f" · about {int(words * 1.4):,} tokens of text" if words else "")
+    for i in range(0, len(files), 10):
+        await inter.followup.send(info if i == 0 else "…more", files=files[i:i + 10], ephemeral=True)
+
+
+@tree.command(name="defaults", description="Change what /export gives you by default (leave empty to just see them)")
+@app_commands.describe(format="Default format", settings="Include settings changes", pc="Include PC info", screenshots="Include screenshots",
+                       crash="Include crash details", newest="Only newest N (0 = all)", days="Only last N days (0 = all)",
+                       new_only="Only new since last export", unreplied="Only unreplied", max_chars="Cut long messages in the Claude text (0 = never)",
+                       reset="Put everything back to normal")
+@app_commands.choices(format=FORMATS)
+async def defaults(inter: discord.Interaction, format: app_commands.Choice[str] = None, settings: bool = None, pc: bool = None,
+                   screenshots: bool = None, crash: bool = None, newest: int = None, days: int = None, new_only: bool = None,
+                   unreplied: bool = None, max_chars: int = None, reset: bool = False):
+    if not allowed(inter.user, inter.permissions):
+        return await inter.response.send_message("Only the developer can change this.", ephemeral=True)
+    st = load_state(); d = {} if reset else st.get("defaults", {})
+    for k, v in (("format", format.value if format else None), ("settings", settings), ("pc", pc), ("screenshots", screenshots),
+                 ("crash", crash), ("newest", newest), ("days", days), ("new_only", new_only), ("unreplied", unreplied), ("max_chars", max_chars)):
+        if v is not None: d[k] = v
+    st["defaults"] = d; save_state(st)
+    o = opts(); names = {c.value: c.name for c in FORMATS}
+    lines = [f"**Format:** {names.get(o['format'], o['format'])}",
+             f"**Include:** " + ", ".join(n for n, k in (("settings", "settings"), ("PC info", "pc"), ("screenshots", "screenshots"), ("crashes", "crash")) if o[k]) or "nothing extra",
+             f"**Only:** " + (", ".join(x for x in (f"newest {o['newest']}" if o["newest"] else "", f"last {o['days']} days" if o["days"] else "",
+                                                     "new since last export" if o["new_only"] else "", "unreplied" if o["unreplied"] else "") if x) or "everything"),
+             f"**Cut messages at:** {o['max_chars'] or 'never'} characters"]
+    await inter.response.send_message(embed=discord.Embed(title="Export defaults", description="\n".join(lines), color=0x5865F2), ephemeral=True)
 
 @tree.command(name="settings", description="Which settings people change the most")
 async def settings_cmd(inter: discord.Interaction):

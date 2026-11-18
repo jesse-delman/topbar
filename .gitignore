@@ -2,3 +2,4 @@ __pycache__/
 keys.bat
 keys.txt
 bot.log
+state.json
