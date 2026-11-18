@@ -1,7 +1,13 @@
-version=11.0.8
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/2bdaa11c0ce45203f83b79e226fc0098bdfd919d/TopBar.exe
-sha256=c18c3e493278b131c848a952feb1c129ec42d846293eb9bae4579eef92415ccd
-notes=Tab engine with separation + Basic Pitch (matches Songsterr test), cumulative update notes, newest update directly, Steam games, Windhawk mods, taskbar shadow flash fix
+version=11.0.9
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/f5d9b793593f039699a1da82666c8af83e4ccb6b/TopBar.exe
+sha256=de5f5c2718cd4046b0614713bb4657f4dcc0c5c2658362f0835153c87e92930e
+notes=Bar on every screen, other screens keep Windows' taskbar, shake on any screen, Settings colors, window-button tooltips, README
+new=TopBar on every screen
+n2=11.0.9|TopBar on every screen
+new=A fresh Settings
+n2=11.0.9|A fresh Settings
+new=Tooltips on window buttons
+n2=11.0.9|Tooltips on window buttons
 new=Tabs much closer to Songsterr
 n2=11.0.8|Tabs much closer to Songsterr
 new=Everything you missed
