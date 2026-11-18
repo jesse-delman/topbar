@@ -130,7 +130,7 @@ async def send_reply(code: str, text: str) -> str:
 # Asks GitHub every 5 seconds "has the bot folder changed?" with an ETag: an unchanged answer is free (doesn't use up the token's limit).
 API = f"https://api.github.com/repos/{REPO}"
 GH = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
-_etag, _sha = None, None
+_etag, _sha, _pause = None, None, 0
 
 
 async def self_update(force=False) -> bool:
@@ -139,6 +139,10 @@ async def self_update(force=False) -> bool:
     async with aiohttp.ClientSession(headers=GH) as s:
         h = {} if force or not _etag else {"If-None-Match": _etag}
         async with s.get(f"{API}/commits", params={"path": "bot", "per_page": "1"}, headers=h) as r:
+            if r.status in (403, 429):  # GitHub asked us to slow down: wait what it says (at least a minute)
+                global _pause
+                _pause = max(60, int(r.headers.get("Retry-After", "60") or 60))
+                return False
             if r.status != 200:
                 return False
             _etag = r.headers.get("ETag")
@@ -177,7 +181,11 @@ async def self_update(force=False) -> bool:
 
 async def update_loop():
     import asyncio
+    global _pause
     while True:
+        if _pause:
+            p, _pause = _pause, 0
+            await asyncio.sleep(p)
         try:
             await self_update()
         except Exception as ex:
