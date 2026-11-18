@@ -15,7 +15,7 @@ python -m pip install -q -r requirements.txt
 for /f "delims=" %%p in ('where pythonw') do (set PW=%%p& goto found)
 :found
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v TopBarBot /t REG_SZ /d "\"%PW%\" \"%~dp0bot.py\"" /f >nul
-powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"name='pythonw.exe'\" | ? CommandLine -like '*bot.py*' | % { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
+powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"name='pythonw.exe'\" | ? CommandLine -like '*bot.py*' | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
 start "" "%PW%" "%~dp0bot.py"
 echo Done. The bot is running in the background and starts with Windows. You can close this.
 timeout /t 5 >nul
