@@ -10,6 +10,9 @@ if not exist keys.txt (
   set /p OW=Your Discord user ID: 
   call :save
 )
+echo Getting the newest version...
+curl -fsSL -o bot.py.new https://raw.githubusercontent.com/jesse-delman/topbar/main/bot/bot.py && move /y bot.py.new bot.py >nul
+curl -fsSL -o requirements.txt.new https://raw.githubusercontent.com/jesse-delman/topbar/main/bot/requirements.txt && move /y requirements.txt.new requirements.txt >nul
 echo Installing...
 python -m pip install -q -r requirements.txt
 for /f "delims=" %%p in ('where pythonw') do (set PW=%%p& goto found)

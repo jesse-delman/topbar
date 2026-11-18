@@ -126,8 +126,59 @@ async def send_reply(code: str, text: str) -> str:
     return "replies.txt kept changing, try again"
 
 
+# ---------------------------------------------------------------- updates itself from GitHub (checks at start and every 10 minutes)
+RAW = f"https://raw.githubusercontent.com/{REPO}/main/bot/"
+
+
+async def self_update() -> bool:
+    """Downloads the newest bot files; if anything changed, restarts into them. Returns False when already up to date."""
+    import subprocess
+    changed = False
+    async with aiohttp.ClientSession() as s:
+        for name in ("requirements.txt", "start.bat", "stop.bat", "README.md", "bot.py"):
+            try:
+                async with s.get(RAW + name, headers={"Cache-Control": "no-cache"}) as r:
+                    if r.status != 200:
+                        continue
+                    new = await r.read()
+            except Exception:
+                continue
+            path = os.path.join(HERE, name)
+            old = open(path, "rb").read() if os.path.exists(path) else b""
+            if new == old:
+                continue
+            if name == "bot.py":
+                try:
+                    compile(new, "bot.py", "exec")  # never install a broken file
+                except SyntaxError:
+                    continue
+            open(path, "wb").write(new)
+            print(f"updated {name}")
+            changed = changed or name in ("bot.py", "requirements.txt")
+            if name == "requirements.txt":
+                py = sys.executable.replace("pythonw.exe", "python.exe")
+                subprocess.run([py, "-m", "pip", "install", "-q", "-r", path], creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    if changed:
+        print("restarting into the new version")
+        await client.close()
+        os.execv(sys.executable, [sys.executable, os.path.join(HERE, "bot.py")])
+    return False
+
+
+async def update_loop():
+    import asyncio
+    while True:
+        try:
+            await self_update()
+        except Exception as ex:
+            print("update check failed:", ex)
+        await asyncio.sleep(600)
+
+
 @client.event
 async def on_ready():
+    if not getattr(client, "_upd", None):
+        client._upd = client.loop.create_task(update_loop())
     await tree.sync()
     print(f"Logged in as {client.user}")
 
@@ -385,6 +436,12 @@ async def defaults(inter: discord.Interaction, format: app_commands.Choice[str] 
                                                      "new since last export" if o["new_only"] else "", "unreplied" if o["unreplied"] else "") if x) or "everything"),
              f"**Cut messages at:** {o['max_chars'] or 'never'} characters"]
     await inter.response.send_message(embed=discord.Embed(title="Export defaults", description="\n".join(lines), color=0x5865F2), ephemeral=True)
+
+@tree.command(name="update", description="Get the newest version of this bot now")
+async def update_cmd(inter: discord.Interaction):
+    await inter.response.send_message("Checking\u2026 if there's a new version the bot restarts in a few seconds.", ephemeral=True)
+    await self_update()
+
 
 @tree.command(name="settings", description="Which settings people change the most")
 async def settings_cmd(inter: discord.Interaction):
