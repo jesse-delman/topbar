@@ -8,8 +8,18 @@
 Replies are written to replies.txt in the GitHub repo, which TopBar already checks.
 Setup: see README.md in this folder. Secrets come from environment variables only.
 """
-import base64, csv, io, os, re
+import base64, csv, io, os, re, sys
 from collections import Counter
+
+# runs hidden in the background: keys come from keys.txt next to this file, errors go to bot.log
+HERE = os.path.dirname(os.path.abspath(__file__))
+if os.path.exists(os.path.join(HERE, "keys.txt")):
+    for _l in open(os.path.join(HERE, "keys.txt"), encoding="utf-8"):
+        if "=" in _l:
+            _k, _v = _l.strip().split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip())
+if sys.stdout is None:
+    sys.stdout = sys.stderr = open(os.path.join(HERE, "bot.log"), "a", encoding="utf-8", buffering=1)
 
 import aiohttp
 import discord

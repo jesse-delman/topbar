@@ -3,6 +3,7 @@
 Reads the feedback channel (the messages TopBar's webhook sends) and lets you answer people from Discord.
 
 ## What it does
+- Runs hidden in the background and starts with Windows (start.bat once; stop.bat to turn off). Errors go to bot.log.
 - **Reply in Discord**: right-click a feedback message → Reply → type. The bot adds a ✅ and the person sees it in TopBar within a few minutes.
 - `/reply code message`: same thing, using the reply code.
 - `/export`: every feedback message as `topbar-feedback.csv` (opens in Excel / Google Sheets) and `topbar-feedback.md`: what each person said, version, and how many settings they changed and which ones.
