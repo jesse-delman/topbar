@@ -39,7 +39,7 @@
 
 **Games.** Ctrl + Shift + G for FPS with averages, 1% and 0.1% lows, frame times, GPU and CPU, and how much memory the game uses. A Game Library with every game from Steam, Epic, GOG, Ubisoft, Xbox, EA, Battle.net and Riot.
 
-**Studio** `BETA`. Trim, split, cut the quiet parts, looks and LUTs, Apple Log, titles, and export to any size, including "fit 10 MB for Discord".
+**Studio** `BETA`. A real multi-track editor in glass: media pool, viewer with scopes and safe zones, inspector, and a timeline with video, caption and audio tracks. Blade, trim, slip, ripple, keyframes, transitions, titles, captions, green screen, masks, blend modes, layouts, colour grading with LUTs and colour matching, beat cutting, music that dips under voices, and export to MP4, HEVC, GIF, WAV, PNG or SRT.
 
 **And more.** Voice changer with realistic voices and a virtual mic, soundboard, notes, screenshots and recording, guitar tabs, tuner and looper, calendar, reminders, clock, calculator, Notification Center, mini player and Power Tools.
 
