@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="454" viewBox="0 0 1200 454" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1200" height="454" rx="28" fill="#1C1C1E"/>
+<text x="48" y="76" font-size="34" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-0.5">Replaces 30 apps.</text>
+<text x="48" y="110" font-size="18" font-weight="400" fill="#A1A1A6" text-anchor="start">All of them in one 7 MB file, sharing one tiny engine.</text>
+<rect x="48" y="150" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="123.5" y="176" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">App launcher</text>
+<rect x="209" y="150" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="284.5" y="176" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Quick search</text>
+<rect x="370" y="150" width="179" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="459.5" y="176" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Desktop widgets</text>
+<rect x="559" y="150" width="188" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="653.0" y="176" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Rainmeter clocks</text>
+<rect x="757" y="150" width="179" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="846.5" y="176" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Live wallpapers</text>
+<rect x="946" y="150" width="160" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="1026.0" y="176" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Wallpaper app</text>
+<rect x="48" y="206" width="179" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="137.5" y="232" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Screenshot tool</text>
+<rect x="237" y="206" width="179" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="326.5" y="232" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Screen recorder</text>
+<rect x="426" y="206" width="170" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="511.0" y="232" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Taskbar styler</text>
+<rect x="606" y="206" width="133" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="672.5" y="232" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Start menu</text>
+<rect x="749" y="206" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="824.5" y="232" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Volume mixer</text>
+<rect x="910" y="206" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="985.5" y="232" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Game overlay</text>
+<rect x="48" y="262" width="142" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="119.0" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">FPS counter</text>
+<rect x="200" y="262" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="275.5" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Game library</text>
+<rect x="361" y="262" width="142" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="432.0" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Mini player</text>
+<rect x="513" y="262" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="588.5" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Sticky notes</text>
+<rect x="674" y="262" width="114" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="731.0" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Calendar</text>
+<rect x="798" y="262" width="123" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="859.5" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Reminders</text>
+<rect x="931" y="262" width="179" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="1020.5" y="288" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Timers &amp; alarms</text>
+<rect x="48" y="318" width="133" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="114.5" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Calculator</text>
+<rect x="191" y="318" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="266.5" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Guitar tuner</text>
+<rect x="352" y="318" width="142" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="423.0" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Guitar tabs</text>
+<rect x="504" y="318" width="95" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="551.5" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Looper</text>
+<rect x="609" y="318" width="160" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="689.0" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Voice changer</text>
+<rect x="779" y="318" width="133" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="845.5" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Soundboard</text>
+<rect x="922" y="318" width="198" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="1021.0" y="344" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Clipboard history</text>
+<rect x="48" y="374" width="216" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="156.0" y="400" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Notification center</text>
+<rect x="274" y="374" width="142" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="345.0" y="400" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Automations</text>
+<rect x="426" y="374" width="151" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="501.5" y="400" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Video editor</text>
+<rect x="587" y="374" width="142" height="40" rx="20" fill="#2C2C2E" stroke="#3A3A3C"/>
+<text x="658.0" y="400" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="middle">Power tools</text>
+</svg>

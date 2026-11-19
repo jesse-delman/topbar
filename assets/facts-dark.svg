@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1200" height="600" rx="28" fill="#1C1C1E"/>
+<text x="48" y="72" font-size="30" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-0.3">Fast facts</text>
+<rect x="48" y="104" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="72" y="180" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">25 MB</text>
+<text x="72" y="216" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">memory in use</text>
+<text x="72" y="292" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">less than one browser tab</text>
+<rect x="328" y="104" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="352" y="180" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">7 MB</text>
+<text x="352" y="216" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">one file, no installer</text>
+<text x="352" y="292" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">nothing else to download</text>
+<rect x="608" y="104" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="632" y="180" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">20+</text>
+<text x="632" y="216" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">apps built in</text>
+<text x="632" y="292" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">search, widgets, studio, games…</text>
+<rect x="888" y="104" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="912" y="180" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">1,400+</text>
+<text x="912" y="216" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">things Search understands</text>
+<text x="912" y="292" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">apps, files, actions, math</text>
+<rect x="48" y="338" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="72" y="414" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">600+</text>
+<text x="72" y="450" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">Shortcuts actions</text>
+<text x="72" y="526" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">automate anything, Apple style</text>
+<rect x="328" y="338" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="352" y="414" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">~0%</text>
+<text x="352" y="450" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">CPU while idle</text>
+<text x="352" y="526" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">wakes up only when needed</text>
+<rect x="608" y="338" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="632" y="414" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">8</text>
+<text x="632" y="450" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">live wallpapers</text>
+<text x="632" y="526" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">drawn by your graphics card</text>
+<rect x="888" y="338" width="258" height="212" rx="18" fill="#2C2C2E"/>
+<text x="912" y="414" font-size="46" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-1">$0</text>
+<text x="912" y="450" font-size="16" font-weight="500" fill="#F5F5F7" text-anchor="start">forever</text>
+<text x="912" y="526" font-size="13" font-weight="400" fill="#A1A1A6" text-anchor="start">no account, no ads</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1200" height="540" rx="28" fill="#F5F5F7"/>
+<defs><linearGradient id="p" x1="0" x2="1"><stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#BF5AF2"/></linearGradient><linearGradient id="q" x1="0" x2="1"><stop offset="0" stop-color="#30D158"/><stop offset="1" stop-color="#64D2FF"/></linearGradient></defs>
+<text x="48" y="76" font-size="34" font-weight="600" fill="#1D1D1F" text-anchor="start" letter-spacing="-0.5">Less is more.</text>
+<text x="48" y="110" font-size="18" font-weight="400" fill="#6E6E73" text-anchor="start">Everything TopBar does, compared with the separate apps it replaces.</text>
+<text x="48" y="220" font-size="20" font-weight="600" fill="#1D1D1F" text-anchor="start">TopBar</text>
+<text x="125.0" y="220" font-size="16" font-weight="400" fill="#6E6E73" text-anchor="start">memory · 25 MB</text>
+<rect x="48" y="236" width="1104" height="6" rx="3" fill="#E8E8ED"/>
+<rect x="48" y="236" width="31" height="6" rx="3" fill="url(#p)"/>
+<text x="1152" y="194" font-size="44" font-weight="700" fill="#1D1D1F" text-anchor="end" letter-spacing="-1">36×</text>
+<text x="1152" y="220" font-size="15" font-weight="600" fill="#6E6E73" text-anchor="end">less memory</text>
+<text x="48" y="300" font-size="20" font-weight="600" fill="#1D1D1F" text-anchor="start">The separate apps</text>
+<text x="251.5" y="300" font-size="16" font-weight="400" fill="#6E6E73" text-anchor="start">memory · ~900 MB</text>
+<rect x="48" y="316" width="1104" height="6" rx="3" fill="#E8E8ED"/>
+<rect x="48" y="316" width="1104" height="6" rx="3" fill="#8E8E93"/>
+<text x="48" y="400" font-size="20" font-weight="600" fill="#1D1D1F" text-anchor="start">TopBar</text>
+<text x="125.0" y="400" font-size="16" font-weight="400" fill="#6E6E73" text-anchor="start">on your drive · 7 MB</text>
+<rect x="48" y="416" width="1104" height="6" rx="3" fill="#E8E8ED"/>
+<rect x="48" y="416" width="10" height="6" rx="3" fill="url(#q)"/>
+<text x="1152" y="374" font-size="44" font-weight="700" fill="#1D1D1F" text-anchor="end" letter-spacing="-1">200×</text>
+<text x="1152" y="400" font-size="15" font-weight="600" fill="#6E6E73" text-anchor="end">smaller</text>
+<text x="48" y="480" font-size="20" font-weight="600" fill="#1D1D1F" text-anchor="start">The separate apps</text>
+<text x="251.5" y="480" font-size="16" font-weight="400" fill="#6E6E73" text-anchor="start">on your drive · ~1,500 MB</text>
+<rect x="48" y="496" width="1104" height="6" rx="3" fill="#E8E8ED"/>
+<rect x="48" y="496" width="1104" height="6" rx="3" fill="#8E8E93"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1200" height="560" rx="28" fill="#1C1C1E"/>
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#5E8BFF"/><stop offset=".5" stop-color="#BF5AF2"/><stop offset="1" stop-color="#FF5FA2"/></linearGradient><linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A3A3C"/><stop offset="1" stop-color="#2C2C2E"/></linearGradient></defs>
+<text x="600" y="120" font-size="22" font-weight="500" fill="#A1A1A6" text-anchor="middle">TopBar for Windows</text>
+<text x="600" y="200" font-size="72" font-weight="700" fill="#F5F5F7" text-anchor="middle" letter-spacing="-1.5">Every tool you use.</text>
+<text x="600" y="282" font-size="72" font-weight="700" fill="url(#g)" text-anchor="middle" letter-spacing="-1.5">One tiny app.</text>
+<text x="600" y="336" font-size="22" font-weight="400" fill="#A1A1A6" text-anchor="middle">Menu bar, Search, widgets, taskbar, wallpapers and 20 apps. 25 MB of memory.</text>
+<rect x="300" y="392" width="440" height="64" rx="32" fill="url(#f)" stroke="#3A3A3C"/>
+<circle cx="340" cy="422" r="11" fill="none" stroke="#A1A1A6" stroke-width="3"/><line x1="348" y1="430" x2="356" y2="438" stroke="#A1A1A6" stroke-width="3" stroke-linecap="round"/>
+<text x="372" y="432" font-size="22" font-weight="400" fill="#A1A1A6" text-anchor="start">Spotlight Search</text>
+<circle cx="788" cy="424" r="32" fill="url(#f)" stroke="#3A3A3C"/>
+<path d="M777 435 L788 412 L799 435 M780 427 H796" stroke="#A1A1A6" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="864" cy="424" r="32" fill="url(#f)" stroke="#3A3A3C"/>
+<path d="M851 416 h9 l3 3 h14 v15 h-26 z M851 422 h26" stroke="#A1A1A6" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<circle cx="940" cy="424" r="32" fill="url(#f)" stroke="#3A3A3C"/>
+<path d="M940 412 L952 419 L940 426 L928 419 Z M928 426 L940 433 L952 426" stroke="#A1A1A6" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+<circle cx="1016" cy="424" r="32" fill="url(#f)" stroke="#3A3A3C"/>
+<rect x="1007" y="413" width="15" height="19" rx="3" stroke="#A1A1A6" stroke-width="2.4" fill="none"/><rect x="1011" y="417" width="15" height="19" rx="3" stroke="#A1A1A6" stroke-width="2.4" fill="#2C2C2E"/>
+</svg>
