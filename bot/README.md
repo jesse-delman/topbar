@@ -6,7 +6,7 @@ Reads the feedback channel (the messages TopBar's webhook sends) and lets you an
 - Runs hidden in the background and starts with Windows (start.bat once; stop.bat to turn off). Errors go to bot.log.
 - **Reply in Discord**: right-click a feedback message → Reply → type. The bot adds a ✅ and the person sees it in TopBar within a few minutes.
 - `/reply code message`: same thing, using the reply code.
-- `/export`: pick what you get (all optional): format (short text for Claude, spreadsheet, full report, or all), newest N, last N days, only new since last export, only unreplied, one type, one person, text search, one version, and whether to include settings changes, PC info, screenshots (zipped) and crash details.
+- `/export`: pick what you get (all optional): format (short text for AI, spreadsheet, full report, or all), newest N, last N days, only new since last export, only unreplied, one type, one person, text search, one version, and whether to include settings changes, PC info, screenshots (zipped, each message in its own folder with its screenshots, plus feedback.html that shows every message with its pictures) and crash details.
 - `/defaults`: save what `/export` gives you when you don't pick anything (`reset` puts it back).
 - old `/export` notes: every feedback message as `topbar-feedback.csv` (opens in Excel / Google Sheets) and `topbar-feedback.md`: what each person said, version, and how many settings they changed and which ones.
 - `/settings`: the settings people change the most, with counts.

@@ -2,7 +2,7 @@
 
 - Reply to a feedback message in Discord (normal Discord reply) -> the person gets it in TopBar.
 - /reply code message   -> same thing, by reply code.
-- /export               -> feedback, filtered how you like (who, type, days, unreplied...), as short text for Claude,
+- /export               -> feedback, filtered how you like (who, type, days, unreplied...), as short text for AI,
                            a spreadsheet, or a full report, with screenshots in a zip.
 - /defaults             -> what /export gives you when you don't pick anything.
 - /settings             -> which settings people change the most.
@@ -83,9 +83,31 @@ def parse(msg: discord.Message):
         "was_doing": field(e, "Was doing"), "setup": field(e, "Setup"),
         "changes": changes, "link": msg.jump_url, "id": msg.id, "dt": msg.created_at,
         "pc": field(e, "PC"), "crash": field(e, "Crash details"),
-        "images": [a for a in msg.attachments if (a.content_type or "").startswith("image/") or a.filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".webp"))],
+        "images": images_of(msg),
         "longtext": next((a for a in msg.attachments if a.filename == "message.txt"), None),
     }
+
+
+IMG_EXT = (".png", ".jpg", ".jpeg", ".gif", ".webp")
+
+
+def images_of(msg):
+    """Every picture on a feedback message: the screenshot TopBar puts inside the embed
+    (attachment://screen.png shows up as the embed image, not as an attachment) plus any attachments."""
+    out, seen = [], set()
+    def add(url, name):
+        key = url.split("?")[0]
+        if url and key not in seen:
+            seen.add(key); out.append({"url": url, "filename": name or os.path.basename(key) or "screen.png"})
+    for e in msg.embeds:
+        for part in (e.image, e.thumbnail):
+            u = getattr(part, "proxy_url", None) or getattr(part, "url", None)
+            if u and not u.startswith("attachment://"):
+                add(getattr(part, "url", None) or u, os.path.basename(u.split("?")[0]))
+    for a in msg.attachments:
+        if (a.content_type or "").startswith("image/") or a.filename.lower().endswith(IMG_EXT):
+            add(a.url, a.filename)
+    return out
 
 
 async def all_feedback():
@@ -265,7 +287,7 @@ def opts():
     d = dict(DEFAULTS); d.update(load_state().get("defaults", {})); return d
 
 
-FORMATS = [app_commands.Choice(name="Short text for Claude (fewest tokens)", value="claude"),
+FORMATS = [app_commands.Choice(name="Short text for AI (fewest tokens)", value="claude"),
            app_commands.Choice(name="Spreadsheet (CSV)", value="csv"),
            app_commands.Choice(name="Full report (Markdown)", value="full"),
            app_commands.Choice(name="Everything (all three)", value="all")]
@@ -281,9 +303,53 @@ def clip(t, n):
     return t if not n or len(t) <= n else t[:n].rstrip() + "…"
 
 
+def folder(p):
+    kind = re.sub(r"[^A-Za-z]", "", p["kind"])[:12] or "Feedback"
+    return f"messages/{p['dt'].strftime('%Y-%m-%d_%H%M')}_{kind}_{p['code']}"
+
+
 def img_name(p, i, a):
-    ext = os.path.splitext(a.filename)[1] or ".png"
-    return f"screenshots/{p['dt'].strftime('%Y-%m-%d_%H%M')}_{p['code']}" + (f"_{i+1}" if i else "") + ext
+    ext = os.path.splitext(a["filename"])[1].lower() or ".png"
+    return f"{folder(p)}/screenshot-{i+1}{ext}"
+
+
+def esc(t):
+    return (t or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def build_html(fb, o):
+    """One page you can open in a browser: every message with its own screenshots right under it."""
+    css = ("body{font:15px/1.5 -apple-system,Segoe UI,sans-serif;background:#f5f5f7;color:#1d1d1f;margin:0;padding:32px}"
+           ".m{background:#fff;border-radius:16px;padding:20px 24px;margin:0 auto 18px;max-width:900px;box-shadow:0 1px 3px #0001}"
+           ".h{color:#6e6e73;font-size:13px}.t{font-weight:600;font-size:17px;margin:4px 0}.b{white-space:pre-wrap}"
+           "img{max-width:100%;border-radius:10px;margin-top:12px;border:1px solid #0001}.x{color:#6e6e73;font-size:13px;margin-top:8px}")
+    h = [f"<!doctype html><meta charset=utf-8><title>TopBar feedback</title><style>{css}</style>",
+         f"<h1 style='max-width:900px;margin:0 auto 20px'>TopBar feedback · {len(fb)} messages</h1>"]
+    for p in fb:
+        h.append("<div class=m>")
+        h.append(f"<div class=h>{esc(p['when'])} · {esc(p['kind'])} from {esc(p['who'])} · <code>{esc(p['code'])}</code> · {esc(p['version'])}" + (" · replied" if p.get("replied") else "") + f" · <a href='{p['link']}'>open in Discord</a></div>")
+        if p["title"]: h.append(f"<div class=t>{esc(p['title'])}</div>")
+        h.append(f"<div class=b>{esc(p['full_text'])}</div>")
+        if p["was_doing"] and p["was_doing"] != "—": h.append(f"<div class=x>Doing: {esc(p['was_doing'])}</div>")
+        if o["settings"] and p["changes"]: h.append(f"<div class=x>Settings: {esc(change_text(p))}</div>")
+        if o["crash"] and p["crash"]: h.append(f"<div class=x>Crash: {esc(p['crash'])}</div>")
+        if o["screenshots"]:
+            h += [f"<a href='{img_name(p, i, a)}'><img src='{img_name(p, i, a)}'></a>" for i, a in enumerate(p["images"])]
+        h.append("</div>")
+    return "\n".join(h)
+
+
+def build_one(p, o):
+    """message.md inside each message's folder, next to its screenshots."""
+    md = [f"# {p['kind']} from {p['who']} ({p['code']})", "", f"{p['when']} · version {p['version']} · [Discord]({p['link']})", ""]
+    if p["title"]: md += [f"**{p['title']}**", ""]
+    md += [p["full_text"], ""]
+    if p["was_doing"] and p["was_doing"] != "—": md += [f"Doing: {p['was_doing']}", ""]
+    if o["settings"] and p["changes"]: md += ["Settings changed:"] + [f"- {n}" + (f": {a} → {b}" if a is not None else "") for n, a, b in p["changes"]] + [""]
+    if o["pc"]: md += ["PC: " + " ".join((p["windows"] + " " + p["pc"] + " " + p["setup"]).split()), ""]
+    if o["crash"] and p["crash"]: md += ["Crash:", p["crash"], ""]
+    md += [f"![screenshot {i+1}](screenshot-{i+1}{os.path.splitext(img_name(p, i, a))[1]})" for i, a in enumerate(p["images"])]
+    return "\n".join(md)
 
 
 def build_claude(fb, o):
@@ -304,7 +370,7 @@ def build_claude(fb, o):
         if o["crash"] and p["crash"]:
             out.append("Crash: " + " ".join(p["crash"].strip("`").split()))
         if o["screenshots"] and p["images"]:
-            out.append("Screenshot: " + ", ".join(img_name(p, i, a) for i, a in enumerate(p["images"])))
+            out.append("Screenshots: " + ", ".join(img_name(p, i, a) for i, a in enumerate(p["images"])))
         out.append("")
     return "\n".join(out)
 
@@ -379,7 +445,7 @@ async def gather(o, kind=None, person=None, search=None, version=None):
     new_only="Only what came in since your last export", unreplied="Only messages you haven't replied to",
     kind="Only one type", person="Only one person (name or reply code)", search="Only messages containing this text",
     version="Only this version (e.g. 1.0.1)", settings="Include which settings they changed", pc="Include PC / Windows / setup info",
-    screenshots="Include screenshots (zip)", crash="Include crash details", max_chars="Cut each message to this many characters in the Claude text (0 = never)")
+    screenshots="Include screenshots (zip)", crash="Include crash details", max_chars="Cut each message to this many characters in the short text (0 = never)")
 @app_commands.choices(format=FORMATS, kind=KINDS)
 async def export(inter: discord.Interaction, format: app_commands.Choice[str] = None, newest: int = None, days: int = None,
                  new_only: bool = None, unreplied: bool = None, kind: app_commands.Choice[str] = None, person: str = None,
@@ -400,33 +466,40 @@ async def export(inter: discord.Interaction, format: app_commands.Choice[str] = 
     if o["format"] in ("csv", "all"): texts["topbar-feedback.csv"] = "﻿" + build_csv(fb, o)
     if o["format"] in ("full", "all"): texts["topbar-feedback.md"] = build_full(fb, o)
 
-    # screenshots: downloaded and zipped with the text, split into parts under Discord's upload limit
+    # screenshots: one folder per message (message.md + its screenshots) and feedback.html showing each
+    # message with its pictures right under it; split into parts under Discord's upload limit, never splitting a message
     files, LIMIT = [], 9_500_000
-    shots = [(img_name(p, i, a), a) for p in fb for i, a in enumerate(p["images"])] if o["screenshots"] else []
+    shots = sum(len(p["images"]) for p in fb) if o["screenshots"] else 0
     if shots:
-        zips, cur, size = [], None, 0
+        texts["feedback.html"] = build_html(fb, o)
+        zips = []
         def new_zip():
-            b = io.BytesIO(); z = zipfile.ZipFile(b, "w", zipfile.ZIP_DEFLATED); zips.append((b, z)); return z
+            b = io.BytesIO(); z = zipfile.ZipFile(b, "w", zipfile.ZIP_DEFLATED); zips.append([b, z, 0]); return zips[-1]
         cur = new_zip()
-        for n, t in texts.items(): cur.writestr(n, t)
-        size = sum(len(t) for t in texts.values()) // 3
+        for n, t in texts.items(): cur[1].writestr(n, t)
         async with aiohttp.ClientSession() as s:
-            for name, a in shots:
-                try:
-                    async with s.get(a.url) as r: data = await r.read()
-                except Exception: continue
-                if size + len(data) > LIMIT and size > 0:
-                    cur = new_zip(); size = 0
-                cur.writestr(name, data); size += len(data)
-        for b, z in zips: z.close()
-        for i, (b, z) in enumerate(zips):
+            for p in fb:
+                pics = []
+                for i, a in enumerate(p["images"]):
+                    try:
+                        async with s.get(a["url"]) as r:
+                            if r.status == 200: pics.append((img_name(p, i, a), await r.read()))
+                    except Exception: pass
+                need = sum(len(d) for _, d in pics)
+                if cur[2] and cur[2] + need > LIMIT:
+                    cur = new_zip(); cur[1].writestr("feedback.html", texts["feedback.html"])
+                cur[1].writestr(f"{folder(p)}/message.md", build_one(p, o))
+                for n, d in pics: cur[1].writestr(n, d)
+                cur[2] += need
+        for b, z, _ in zips: z.close()
+        for i, (b, z, _) in enumerate(zips):
             files.append(discord.File(io.BytesIO(b.getvalue()), "topbar-feedback.zip" if len(zips) == 1 else f"topbar-feedback-part{i+1}.zip"))
     else:
         files = [discord.File(io.BytesIO(t.encode("utf-8")), n) for n, t in texts.items()]
 
     st = load_state(); st["last_export"] = datetime.now(timezone.utc).isoformat(); save_state(st)
     words = sum(len(t.split()) for n, t in texts.items() if n.endswith(".txt"))
-    info = f"{len(fb)} messages from {len({p['code'] for p in fb})} people" + (f", {len(shots)} screenshots" if shots else "") + (f" · about {int(words * 1.4):,} tokens of text" if words else "")
+    info = f"{len(fb)} messages from {len({p['code'] for p in fb})} people" + (f", {shots} screenshots (open feedback.html in the zip)" if shots else "") + (f" · about {int(words * 1.4):,} tokens of text" if words else "")
     for i in range(0, len(files), 10):
         await inter.followup.send(info if i == 0 else "…more", files=files[i:i + 10], ephemeral=True)
 
@@ -434,7 +507,7 @@ async def export(inter: discord.Interaction, format: app_commands.Choice[str] = 
 @tree.command(name="defaults", description="Change what /export gives you by default (leave empty to just see them)")
 @app_commands.describe(format="Default format", settings="Include settings changes", pc="Include PC info", screenshots="Include screenshots",
                        crash="Include crash details", newest="Only newest N (0 = all)", days="Only last N days (0 = all)",
-                       new_only="Only new since last export", unreplied="Only unreplied", max_chars="Cut long messages in the Claude text (0 = never)",
+                       new_only="Only new since last export", unreplied="Only unreplied", max_chars="Cut long messages in the short text (0 = never)",
                        reset="Put everything back to normal")
 @app_commands.choices(format=FORMATS)
 async def defaults(inter: discord.Interaction, format: app_commands.Choice[str] = None, settings: bool = None, pc: bool = None,

@@ -76,7 +76,7 @@ To check right now, type **update** in Search, or go to **Settings › About**.
 
 ## Credits
 
-- Made by the developer. Claude (Anthropic's AI) assists with connections and consistency.
+- Made by the developer.
 
 - Guitar Tabs uses [Basic Pitch](https://github.com/spotify/basic-pitch) by Spotify (Apache License 2.0), built in.
 - Instrument splitting uses Demucs (htdemucs), downloaded on first use.
