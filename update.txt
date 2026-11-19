@@ -1,7 +1,9 @@
-version=11.0.9
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/f5d9b793593f039699a1da82666c8af83e4ccb6b/TopBar.exe
-sha256=de5f5c2718cd4046b0614713bb4657f4dcc0c5c2658362f0835153c87e92930e
-notes=Bar on every screen, other screens keep Windows' taskbar, shake on any screen, Settings colors, window-button tooltips, README
+version=11.0.10
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/94c4fea9f8ae5b8bc94c2b5b4023ae73aa5d2f91/TopBar.exe
+sha256=ba882d851c936410d3e915f2343b4f9383627f621e936540cb8d64475de2585c
+notes=All-new layered app icons with dark versions, new TopBar icon
+new=All-new app icons
+n2=11.0.10|All-new app icons
 new=TopBar on every screen
 n2=11.0.9|TopBar on every screen
 new=A fresh Settings
