@@ -236,16 +236,121 @@ async def update_loop():
         await asyncio.sleep(5)
 
 
+# ---------------------------------------------------------------- keeps the feedback link safe (nothing to set up)
+# The app finds its feedback webhook in feedback.txt (scrambled, but public), so someone could try to rename it, delete it or
+# post junk through it. Once a minute the bot puts its name, picture and channel back; if it was deleted, it makes a new one in
+# the feedback channel and publishes that (apps pick it up on their next update check, within minutes). Anything posted through
+# it that isn't a TopBar report is deleted. Needs the bot's "Manage Webhooks" permission; without it this quietly does nothing.
+def hook_unscramble(hx: str) -> str:
+    b = bytes.fromhex(hx.strip())
+    return bytes(c ^ 0x5A for c in reversed(b)).decode("utf-8", "replace")
+
+
+def hook_scramble(url: str) -> str:
+    return "".join(f"{c ^ 0x5A:02x}" for c in reversed(url.encode("utf-8")))
+
+
+_hook_id = None
+
+
+async def guard_once():
+    global _hook_id
+    import base64 as b64
+    url = f"{API}/contents/feedback.txt"
+    async with aiohttp.ClientSession(headers=GH) as s:
+        async with s.get(url) as r:
+            if r.status != 200:
+                return
+            j = await r.json()
+        body = b64.b64decode(j["content"]).decode("utf-8")
+        m = re.search(r"hookx=([0-9a-fA-F]+)", body)
+        if not m:
+            return
+        hm = re.search(r"/webhooks/(\d+)/", hook_unscramble(m.group(1)))
+        if not hm:
+            return
+        _hook_id = int(hm.group(1))
+        st = load_state()
+        good = st.get("hook_good")
+        try:
+            wh = await client.fetch_webhook(_hook_id)
+        except discord.NotFound:
+            wh = None
+        except discord.Forbidden:
+            return
+        if wh is not None:
+            if not good or good.get("id") != wh.id:
+                av = None
+                if wh.avatar:
+                    try:
+                        av = b64.b64encode(await wh.avatar.read()).decode()
+                    except Exception:
+                        av = None
+                st["hook_good"] = {"id": wh.id, "name": wh.name, "channel": wh.channel_id, "avatar": av}
+                save_state(st)
+                return
+            changes = {}
+            if wh.name != good["name"]:
+                changes["name"] = good["name"]
+            if wh.channel_id != good["channel"]:
+                ch = client.get_channel(good["channel"]) or await client.fetch_channel(good["channel"])
+                changes["channel"] = ch
+            if bool(wh.avatar) != bool(good.get("avatar")) and good.get("avatar"):
+                changes["avatar"] = b64.b64decode(good["avatar"])
+            if changes:
+                await wh.edit(reason="TopBar: put the feedback link back the way it was", **changes)
+                print("feedback webhook restored:", list(changes))
+            return
+        # deleted: make a new one and publish it
+        ch = client.get_channel(CHANNEL) or await client.fetch_channel(CHANNEL)
+        name = (good or {}).get("name") or "TopBar Feedback"
+        av = b64.b64decode(good["avatar"]) if good and good.get("avatar") else None
+        nw = await ch.create_webhook(name=name, avatar=av, reason="TopBar: the feedback link was deleted")
+        body2 = re.sub(r"hookx=[0-9a-fA-F]+", "hookx=" + hook_scramble(nw.url), body)
+        data = {"message": "New feedback link", "sha": j["sha"], "content": b64.b64encode(body2.encode("utf-8")).decode()}
+        async with s.put(url, json=data) as r:
+            ok = r.status in (200, 201)
+        st["hook_good"] = {"id": nw.id, "name": name, "channel": nw.channel_id, "avatar": (good or {}).get("avatar")}
+        save_state(st)
+        _hook_id = nw.id
+        try:
+            await ch.send("The feedback link was deleted by someone, so I made a new one" + (" and published it. Apps switch to it on their next update check." if ok else ", but couldn't publish it to GitHub."))
+        except Exception:
+            pass
+
+
+async def guard_loop():
+    import asyncio
+    while True:
+        try:
+            await guard_once()
+        except Exception as ex:
+            print("webhook guard:", ex)
+        await asyncio.sleep(60)
+
+
+def is_report(msg: discord.Message) -> bool:
+    return any(f.name == "Reply code" for e in msg.embeds for f in e.fields)
+
+
 @client.event
 async def on_ready():
     if not getattr(client, "_upd", None):
         client._upd = client.loop.create_task(update_loop())
+        client._guard = client.loop.create_task(guard_loop())
     await tree.sync()
     print(f"Logged in as {client.user}")
 
 
 @client.event
 async def on_message(msg: discord.Message):
+    # junk sent through the feedback link (not a TopBar report) is removed
+    if msg.webhook_id and _hook_id and msg.webhook_id == _hook_id and not is_report(msg):
+        try:
+            await msg.delete()
+        except Exception:
+            pass
+        return
     # replying to a feedback message in Discord sends that reply to the person
     if msg.author.bot or msg.channel.id != CHANNEL or not msg.reference or not (msg.content.strip() or msg.attachments):
         return
