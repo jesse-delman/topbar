@@ -1,5 +1,5 @@
 version=11.0.10
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/94c4fea9f8ae5b8bc94c2b5b4023ae73aa5d2f91/TopBar.exe
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/5befd88c9d60841bf773a0e18ee2ba9f58ea2b7b/TopBar.exe
 sha256=ba882d851c936410d3e915f2343b4f9383627f621e936540cb8d64475de2585c
 notes=All-new layered app icons with dark versions, new TopBar icon
 new=All-new app icons
