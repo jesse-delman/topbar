@@ -2,10 +2,12 @@
 
 - Reply to a feedback message in Discord (normal Discord reply) -> the person gets it in TopBar.
 - /reply code message   -> same thing, by reply code.
-- /export               -> feedback, filtered how you like (who, type, days, unreplied...), as short text for AI,
+- /export               -> what's new since your last export (or everything / unreplied), with your saved /exportsettings,
                            a spreadsheet, or a full report, with screenshots in a zip.
-- /defaults             -> what /export gives you when you don't pick anything.
-- /settings             -> which settings people change the most.
+- /exportfilter         -> one type, one person, a word, a version...
+- /undoexport           -> made an export by mistake? its messages count as new again.
+- /exportsettings       -> what /export gives you (format, screenshots, settings, PC info).
+- /topsettings          -> which settings people change the most.
 
 Replies are written to replies.txt in the GitHub repo, which TopBar already checks.
 Setup: see README.md in this folder. Secrets come from environment variables only.
@@ -229,21 +231,21 @@ async def on_message(msg: discord.Message):
     if msg.author.bot or msg.channel.id != CHANNEL or not msg.reference or not msg.content.strip():
         return
     if not allowed(msg.author, msg.channel.permissions_for(msg.author) if msg.guild else None):
-        return
+        return await msg.reply("Only the developer can reply to feedback (check OWNER_ID in keys.txt is your Discord user ID).", mention_author=False)
     try:
         src = msg.reference.resolved or await msg.channel.fetch_message(msg.reference.message_id)
     except discord.HTTPException:
         return
     p = parse(src) if isinstance(src, discord.Message) else None
     if not p:
-        return
+        return await msg.reply("That message has no reply code, so it can't be answered in TopBar.", mention_author=False)
     err = await send_reply(p["code"], msg.content)
     if not err:
         mark_replied(p["id"])
     if err:
         await msg.reply(f"Couldn't send: {err}", mention_author=False)
     else:
-        await msg.add_reaction("\u2705")  # sent; shows up in their TopBar within a few minutes
+        await msg.add_reaction("\u2705")  # sent; shows up in their TopBar within about 2 minutes
 
 
 @tree.command(description="Send a reply to someone's TopBar by their reply code")
@@ -418,8 +420,12 @@ async def gather(o, kind=None, person=None, search=None, version=None):
     st = load_state(); fb = await all_feedback()
     if o["days"]:
         since = datetime.now(timezone.utc) - timedelta(days=o["days"]); fb = [p for p in fb if p["dt"] >= since]
-    if o["new_only"] and st.get("last_export"):
-        last = datetime.fromisoformat(st["last_export"]); fb = [p for p in fb if p["dt"] > last]
+    if o["new_only"]:
+        done = set(st.get("exported", []))
+        if not done and st.get("last_export"):   # older state: fall back to the time of the last export
+            last = datetime.fromisoformat(st["last_export"]); fb = [p for p in fb if p["dt"] > last]
+        else:
+            fb = [p for p in fb if p["id"] not in done]
     if kind: fb = [p for p in fb if kind.lower() in p["kind"].lower() or (kind == "Crash" and p["crash"])]
     if person:
         q = person.lower().strip("` "); fb = [p for p in fb if q in p["who"].lower() or q == p["code"].lower()]
@@ -439,27 +445,56 @@ async def gather(o, kind=None, person=None, search=None, version=None):
     return fb
 
 
-@tree.command(description="Export feedback. Anything you leave empty uses your /defaults")
+WHAT = [app_commands.Choice(name="New since my last export", value="new"),
+        app_commands.Choice(name="Everything", value="all"),
+        app_commands.Choice(name="Not replied to yet", value="unreplied")]
+
+
+@tree.command(description="Export feedback with your saved export settings (change them with /exportsettings)")
+@app_commands.describe(what="Which messages (default: new since your last export)")
+@app_commands.choices(what=WHAT)
+async def export(inter: discord.Interaction, what: app_commands.Choice[str] = None):
+    await inter.response.defer(ephemeral=True)
+    o = opts(); w = what.value if what else "new"
+    o["new_only"] = w == "new"; o["unreplied"] = w == "unreplied"
+    if w == "all": o["newest"] = o["days"] = 0
+    await do_export(inter, o)
+
+
+@tree.command(name="exportfilter", description="Export with filters (one type, one person, a word, a version...)")
 @app_commands.describe(
     format="What you get back", newest="Only the newest N messages", days="Only the last N days",
-    new_only="Only what came in since your last export", unreplied="Only messages you haven't replied to",
+    new_only="Only what you haven't exported yet", unreplied="Only messages you haven't replied to",
     kind="Only one type", person="Only one person (name or reply code)", search="Only messages containing this text",
     version="Only this version (e.g. 1.0.1)", settings="Include which settings they changed", pc="Include PC / Windows / setup info",
     screenshots="Include screenshots (zip)", crash="Include crash details", max_chars="Cut each message to this many characters in the short text (0 = never)")
 @app_commands.choices(format=FORMATS, kind=KINDS)
-async def export(inter: discord.Interaction, format: app_commands.Choice[str] = None, newest: int = None, days: int = None,
-                 new_only: bool = None, unreplied: bool = None, kind: app_commands.Choice[str] = None, person: str = None,
-                 search: str = None, version: str = None, settings: bool = None, pc: bool = None, screenshots: bool = None,
-                 crash: bool = None, max_chars: int = None):
+async def exportfilter(inter: discord.Interaction, format: app_commands.Choice[str] = None, newest: int = None, days: int = None,
+                       new_only: bool = None, unreplied: bool = None, kind: app_commands.Choice[str] = None, person: str = None,
+                       search: str = None, version: str = None, settings: bool = None, pc: bool = None, screenshots: bool = None,
+                       crash: bool = None, max_chars: int = None):
     await inter.response.defer(ephemeral=True)
     o = opts()
     for k, v in (("format", format.value if format else None), ("newest", newest), ("days", days), ("new_only", new_only),
                  ("unreplied", unreplied), ("settings", settings), ("pc", pc), ("screenshots", screenshots),
                  ("crash", crash), ("max_chars", max_chars)):
         if v is not None: o[k] = v
-    fb = await gather(o, kind.value if kind else None, person, search, version)
+    await do_export(inter, o, kind.value if kind else None, person, search, version)
+
+
+@tree.command(name="undoexport", description="Undo your last export: its messages count as new again")
+async def undoexport(inter: discord.Interaction):
+    st = load_state(); log = st.get("export_log", [])
+    if not log:
+        return await inter.response.send_message("Nothing to undo.", ephemeral=True)
+    last = set(log.pop()); st["exported"] = [i for i in st.get("exported", []) if i not in last]; st["export_log"] = log; save_state(st)
+    await inter.response.send_message(f"Done: {len(last)} messages count as new again. ({len(log)} more exports can be undone.)", ephemeral=True)
+
+
+async def do_export(inter, o, kind=None, person=None, search=None, version=None):
+    fb = await gather(o, kind, person, search, version)
     if not fb:
-        return await inter.followup.send("No feedback matches that.", ephemeral=True)
+        return await inter.followup.send("Nothing new since your last export." if o["new_only"] else "No feedback matches that.", ephemeral=True)
 
     texts = {}
     if o["format"] in ("claude", "all"): texts["topbar-feedback.txt"] = build_claude(fb, o)
@@ -497,17 +532,18 @@ async def export(inter: discord.Interaction, format: app_commands.Choice[str] = 
     else:
         files = [discord.File(io.BytesIO(t.encode("utf-8")), n) for n, t in texts.items()]
 
-    st = load_state(); st["last_export"] = datetime.now(timezone.utc).isoformat(); save_state(st)
+    st = load_state(); st["last_export"] = datetime.now(timezone.utc).isoformat()
+    ids = [p["id"] for p in fb]; st["exported"] = list(set(st.get("exported", [])) | set(ids)); st["export_log"] = (st.get("export_log", []) + [ids])[-20:]; save_state(st)
     words = sum(len(t.split()) for n, t in texts.items() if n.endswith(".txt"))
-    info = f"{len(fb)} messages from {len({p['code'] for p in fb})} people" + (f", {shots} screenshots (open feedback.html in the zip)" if shots else "") + (f" · about {int(words * 1.4):,} tokens of text" if words else "")
+    info = ("Undo with /undoexport if that was a mistake. " if o["new_only"] else "") + f"{len(fb)} messages from {len({p['code'] for p in fb})} people" + (f", {shots} screenshots (open feedback.html in the zip)" if shots else "") + (f" · about {int(words * 1.4):,} tokens of text" if words else "")
     for i in range(0, len(files), 10):
         await inter.followup.send(info if i == 0 else "…more", files=files[i:i + 10], ephemeral=True)
 
 
-@tree.command(name="defaults", description="Change what /export gives you by default (leave empty to just see them)")
+@tree.command(name="exportsettings", description="What /export gives you: format, what to include (leave empty to just see them)")
 @app_commands.describe(format="Default format", settings="Include settings changes", pc="Include PC info", screenshots="Include screenshots",
                        crash="Include crash details", newest="Only newest N (0 = all)", days="Only last N days (0 = all)",
-                       new_only="Only new since last export", unreplied="Only unreplied", max_chars="Cut long messages in the short text (0 = never)",
+                       new_only="Only what you haven't exported yet", unreplied="Only unreplied", max_chars="Cut long messages in the short text (0 = never)",
                        reset="Put everything back to normal")
 @app_commands.choices(format=FORMATS)
 async def defaults(inter: discord.Interaction, format: app_commands.Choice[str] = None, settings: bool = None, pc: bool = None,
@@ -534,7 +570,7 @@ async def update_cmd(inter: discord.Interaction):
     await self_update(force=True)
 
 
-@tree.command(name="settings", description="Which settings people change the most")
+@tree.command(name="topsettings", description="Which TopBar settings people change the most")
 async def settings_cmd(inter: discord.Interaction):
     await inter.response.defer(ephemeral=True)
     fb = await all_feedback()
