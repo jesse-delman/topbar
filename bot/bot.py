@@ -122,12 +122,31 @@ async def all_feedback():
     return out
 
 
-async def send_reply(code: str, text: str) -> str:
-    """Add 'CODE | text' to replies.txt on GitHub. Returns '' or an error."""
+async def upload_files(code: str, atts) -> list:
+    """Put each attachment (pictures, videos, any file) in the repo under replies/, so TopBar can show or download it. Returns raw URLs."""
+    urls = []
+    h = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
+    async with aiohttp.ClientSession(headers=h) as s:
+        for a in atts[:8]:
+            if a.size > 50_000_000:
+                continue
+            data = await a.read()
+            name = re.sub(r"[^A-Za-z0-9._-]", "_", a.filename)[:80] or "file"
+            path = f"replies/{code}-{a.id}-{name}"
+            body = {"message": f"Reply file for {code}", "content": base64.b64encode(data).decode()}
+            async with s.put(f"https://api.github.com/repos/{REPO}/contents/{path}", json=body) as r:
+                if r.status in (200, 201):
+                    urls.append(f"https://raw.githubusercontent.com/{REPO}/main/{path}")
+    return urls
+
+
+async def send_reply(code: str, text: str, atts=()) -> str:
+    """Add 'CODE | text ||| file-url ...' to replies.txt on GitHub. Returns '' or an error."""
     code = re.sub(r"[^0-9A-Fa-f]", "", code).upper()
     if not code:
         return "That isn't a reply code."
-    line = f"{code} | " + text.replace("\r", "").replace("\n", "\\n").strip()
+    urls = await upload_files(code, list(atts)) if atts else []
+    line = f"{code} | " + (text.replace("\r", "").replace("\n", "\\n").strip() or "(see the attachment)") + "".join(f" ||| {u}" for u in urls)
     url = f"https://api.github.com/repos/{REPO}/contents/replies.txt"
     h = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
     async with aiohttp.ClientSession(headers=h) as s:
@@ -228,7 +247,7 @@ async def on_ready():
 @client.event
 async def on_message(msg: discord.Message):
     # replying to a feedback message in Discord sends that reply to the person
-    if msg.author.bot or msg.channel.id != CHANNEL or not msg.reference or not msg.content.strip():
+    if msg.author.bot or msg.channel.id != CHANNEL or not msg.reference or not (msg.content.strip() or msg.attachments):
         return
     if not allowed(msg.author, msg.channel.permissions_for(msg.author) if msg.guild else None):
         return await msg.reply("Only the developer can reply to feedback (check OWNER_ID in keys.txt is your Discord user ID).", mention_author=False)
@@ -239,21 +258,21 @@ async def on_message(msg: discord.Message):
     p = parse(src) if isinstance(src, discord.Message) else None
     if not p:
         return await msg.reply("That message has no reply code, so it can't be answered in TopBar.", mention_author=False)
-    err = await send_reply(p["code"], msg.content)
+    err = await send_reply(p["code"], msg.content, msg.attachments)   # pictures, videos and files you attach go along
     if not err:
         mark_replied(p["id"])
     if err:
         await msg.reply(f"Couldn't send: {err}", mention_author=False)
     else:
-        await msg.add_reaction("\u2705")  # sent; shows up in their TopBar within about 2 minutes
+        await msg.add_reaction("\u2705")  # sent; shows up in their TopBar within about 20 seconds
 
 
-@tree.command(description="Send a reply to someone's TopBar by their reply code")
-async def reply(inter: discord.Interaction, code: str, message: str):
+@tree.command(description="Send a reply to someone's TopBar by their reply code (a file or picture can go with it)")
+async def reply(inter: discord.Interaction, code: str, message: str, file: discord.Attachment = None):
     if not allowed(inter.user, inter.permissions):
         return await inter.response.send_message("Only the developer can reply.", ephemeral=True)
     await inter.response.defer(ephemeral=True)
-    err = await send_reply(code, message)
+    err = await send_reply(code, message, [file] if file else [])
     if not err:
         st = load_state(); st.setdefault("replied_codes", []).append(code.strip("` ").upper()); save_state(st)
     await inter.followup.send(f"Couldn't send: {err}" if err else f"Sent to `{code}`.", ephemeral=True)
