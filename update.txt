@@ -1,6 +1,6 @@
 version=11.0.13
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/00fe3b8e175f88eb1c38f3a9b895fd0df7c553bb/TopBar.exe
-sha256=
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/c45dae7b8da2022bf834cbbe29e653f054681d02/TopBar.exe
+sha256=0f098c40598f1312d0e40ae153ada52b49b2afc3443d037ac88559991c969c8e
 notes=Security fix and a big update: Shortcuts app, a new Search that finds every file on your PC, live wallpapers and desktop presets, a taskbar you can shape, FPS without setup, Dynamic Island as the hub, Studio titles, and many fixes
 mandatory=1
 new=Shortcuts app (Beta)
