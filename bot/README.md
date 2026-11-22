@@ -6,11 +6,8 @@ Reads the feedback channel (the messages TopBar's webhook sends) and lets you an
 - Runs hidden in the background and starts with Windows (start.bat once; stop.bat to turn off). Errors go to bot.log.
 - **Reply in Discord**: right-click a feedback message → Reply → type (attach pictures, videos or files too). The bot adds a ✅ and the person sees it in TopBar within about 20 seconds: a card in the middle of their screen that glides into the corner.
 - `/reply code message`: same thing, using the reply code.
-- `/export`: what's new since your last export (pick "Everything" or "Not replied to yet" if you want), using your saved `/exportsettings`. Screenshots come in a zip: each message has its own folder, and `feedback.html` shows every message with its pictures.
-- `/exportsettings`: what `/export` gives you (format, screenshots, settings changed, PC info). `reset` puts it back.
-- `/exportfilter`: one type, one person, a word or a version.
-- `/undoexport`: exported by mistake? Those messages count as new again.
-- `/topsettings`: the settings people change the most, with counts.
+- `/export`: everything, no options: what each person wrote, their whole PC (processor, graphics, memory, screens with their refresh rate, drives, Windows) and every picture. You get a zip with `feedback.txt` and `feedback.html` (each message with its pictures under it).
+- People can answer your replies from TopBar. Their answer shows up here as a teal **Reply from …** message; reply to it the same way to keep talking.
 
 ## Set up (once)
 1. Go to https://discord.com/developers/applications → **New Application** → **Bot** → **Reset Token** and copy it.
