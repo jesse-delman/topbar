@@ -1,7 +1,13 @@
-version=11.0.16
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/34f8cb43f2881c4b5528952b74e7022a6660d8df/TopBar.exe
-sha256=147ebd3ecc7f50577fd3b19bced5eb923f2cdb2ef8072b5a36d2d72b18ecc9a6
-notes=Settings organized like a Mac, Background Sounds, Photo/Sound widget, Shortcuts without typing, real Spotify control, notch replies, full PC specs, tooltips everywhere and many fixes
+version=11.0.17
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/99779b60085b7370fb1956e70c6bbbd85924952d/TopBar.exe
+sha256=bc40715f92f82ee99ad5eacce40f151d1ecf80b907a0e715b7474e0c54352870
+notes=Simpler mic panel: Hear Myself is your real Windows mic, set your Windows mic from TopBar, voice changer removed
+new=A simpler mic panel
+n2=11.0.17|A simpler mic panel
+new=Hear exactly what Windows hears
+n2=11.0.17|Hear exactly what Windows hears
+new=Your Windows mic, from TopBar
+n2=11.0.17|Your Windows mic, from TopBar
 new=Settings, organized like a Mac
 n2=11.0.16|Settings, organized like a Mac
 new=Fonts: Inter plus yours
