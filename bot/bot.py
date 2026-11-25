@@ -202,7 +202,8 @@ async def self_update(force=False) -> bool:
             changed = changed or name in ("bot.py", "requirements.txt")
             if name == "requirements.txt":
                 py = sys.executable.replace("pythonw.exe", "python.exe")
-                subprocess.run([py, "-m", "pip", "install", "-q", "-r", path], creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+                import asyncio
+                await asyncio.to_thread(subprocess.run, [py, "-m", "pip", "install", "-q", "-r", path], creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))   # never freezes the bot
     if changed:
         print("restarting into the new version")
         await client.close()
@@ -444,9 +445,9 @@ def build_html(fb):
 
 @tree.command(description="Export all feedback: what people wrote, their PC and their pictures")
 async def export(inter: discord.Interaction):
+    await inter.response.defer(ephemeral=True, thinking=True)   # answer Discord right away (it gives up after 3 seconds)
     if not allowed(inter.user, inter.permissions):
-        return await inter.response.send_message("Only the developer can export.", ephemeral=True)
-    await inter.response.defer(ephemeral=True)
+        return await inter.followup.send("Only the developer can export.", ephemeral=True)
     try:
         st = load_state(); fb = await all_feedback()
         if not fb:
