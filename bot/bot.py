@@ -206,8 +206,13 @@ async def self_update(force=False) -> bool:
                 await asyncio.to_thread(subprocess.run, [py, "-m", "pip", "install", "-q", "-r", path], creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))   # never freezes the bot
     if changed:
         print("restarting into the new version")
+        import subprocess
+        # start the new copy first (properly quoted, so a Python in "Program Files" works), then leave. os.execv broke on paths with spaces
+        # and left the bot offline, which is why Discord said "The application did not respond".
+        flags = getattr(subprocess, "DETACHED_PROCESS", 0) | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "CREATE_NO_WINDOW", 0)
+        subprocess.Popen([sys.executable, os.path.join(HERE, "bot.py")], cwd=HERE, creationflags=flags, close_fds=True)
         await client.close()
-        os.execv(sys.executable, [sys.executable, os.path.join(HERE, "bot.py")])
+        os._exit(0)
     return changed
 
 
