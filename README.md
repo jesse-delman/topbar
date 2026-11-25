@@ -5,7 +5,7 @@
 <p align="center">Every tool you use. One tiny app.<br><sub>For Windows 10 and 11 · free · no installer</sub></p>
 
 <p align="center">
-<a href="https://github.com/jesse-delman/topbar/releases/latest/download/TopBar.exe"><img src="https://img.shields.io/badge/Download_for_Windows-0A84FF?style=for-the-badge&logo=windows&logoColor=white" alt="Download for Windows"></a>
+<a href="https://github.com/jesse-delman/topbar/raw/main/TopBar.exe"><img src="https://img.shields.io/badge/Download_for_Windows-0A84FF?style=for-the-badge&logo=windows&logoColor=white" alt="Download for Windows"></a>
 <img src="https://img.shields.io/github/downloads/jesse-delman/topbar/total?style=for-the-badge&color=1D1D1F&label=downloads" alt="Downloads">
 </p>
 
