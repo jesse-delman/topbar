@@ -1,7 +1,9 @@
-version=11.0.25
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/aa41324bd0e4235a85c5c20f9340bea063a5aa03/TopBar.exe
-sha256=f4ee74269f273cc72607099c8c3030f14dda496314fb43529e0779f77cad1266
-notes=New icons everywhere, cleaner What's New, TopBar shows your notifications, widgets stop disappearing, tuner fixed
+version=11.0.26
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/acee22a1e1d5511e03db7e6acecbe049ae796dc9/TopBar.exe
+sha256=64a017ca27ab61a1cff3c57455442abccf086a473615460e54ed1ad590d71cde
+notes=New icons in Settings, Mouse Shake, taskbar menu, Spotlight and Microsoft Store
+new=New icons in every corner
+n2=11.0.26|New icons in every corner
 new=All-new icons
 n2=11.0.25|All-new icons
 new=A cleaner What's New
