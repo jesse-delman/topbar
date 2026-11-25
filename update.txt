@@ -1,7 +1,13 @@
-version=11.0.23
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/ba7d5677856bbe655ebb35ceec0ff89773d28549/TopBar.exe
-sha256=3891b0956d6b978fff68b3bc0d5fe4d09e4cc49b418bdbda635cdfccfbe128d0
-notes=Background Sounds: Distant Racing, City Traffic, Car in the Rain. Notes: Apple Notes formatting, fonts, paper, smoother scrolling, one-click delete
+version=11.0.24
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/bb591b59246a9d761abd4ccc44a5e3cfa436274c/TopBar.exe
+sha256=a656a72aa91b2f535bb5baf4bd027ac9049ab83d1b06dc75245ba7bef93818a0
+notes=Tour: beta tester card with read-first countdown, Feedback emphasis, Spotlight naming, sharper magnifier
+new=You're a beta tester
+n2=11.0.24|You're a beta tester
+new=Feedback comes first
+n2=11.0.24|Feedback comes first
+new=Clearer and sharper
+n2=11.0.24|Clearer and sharper
 new=Distant Racing
 n2=11.0.23|Distant Racing
 new=City Traffic and Car in the Rain
