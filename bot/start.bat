@@ -12,14 +12,15 @@ if not exist keys.txt (
 )
 echo Getting the newest version...
 curl -fsSL -o bot.py.new https://raw.githubusercontent.com/jesse-delman/topbar/main/bot/bot.py && move /y bot.py.new bot.py >nul
+curl -fsSL -o runner.py.new https://raw.githubusercontent.com/jesse-delman/topbar/main/bot/runner.py && move /y runner.py.new runner.py >nul
 curl -fsSL -o requirements.txt.new https://raw.githubusercontent.com/jesse-delman/topbar/main/bot/requirements.txt && move /y requirements.txt.new requirements.txt >nul
 echo Installing...
 python -m pip install -q -r requirements.txt
 for /f "delims=" %%p in ('where pythonw') do (set PW=%%p& goto found)
 :found
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v TopBarBot /t REG_SZ /d "\"%PW%\" \"%~dp0bot.py\"" /f >nul
-powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"name='pythonw.exe'\" | ? CommandLine -like '*bot.py*' | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
-start "" "%PW%" "%~dp0bot.py"
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v TopBarBot /t REG_SZ /d "\"%PW%\" \"%~dp0runner.py\"" /f >nul
+powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"name='pythonw.exe'\" | ? { $_.CommandLine -like '*bot.py*' -or $_.CommandLine -like '*runner.py*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
+start "" "%PW%" "%~dp0runner.py"
 echo Done. The bot is running in the background and starts with Windows. You can close this.
 timeout /t 5 >nul
 exit /b

@@ -204,7 +204,7 @@ async def self_update(force=False) -> bool:
         first = _sha is None
         _sha = sha
         changed = False
-        for name in ("requirements.txt", "start.bat", "stop.bat", "README.md", "bot.py"):
+        for name in ("requirements.txt", "start.bat", "stop.bat", "README.md", "runner.py", "bot.py"):
             async with s.get(f"{API}/contents/bot/{name}", params={"ref": sha}, headers={"Accept": "application/vnd.github.raw"}) as r:
                 if r.status != 200:
                     continue
@@ -230,7 +230,10 @@ async def self_update(force=False) -> bool:
         import subprocess
         # start the new copy first (properly quoted, so a Python in "Program Files" works), then leave. os.execv broke on paths with spaces
         # and left the bot offline, which is why Discord said "The application did not respond".
-        flags = getattr(subprocess, "DETACHED_PROCESS", 0) | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | getattr(subprocess, "CREATE_NO_WINDOW", 0)
+        if os.environ.get("TOPBAR_RUNNER"):   # runner.py starts the new version the moment this one leaves
+            await client.close()
+            os._exit(3)
+        flags = getattr(subprocess, "DETACHED_PROCESS", 0) | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
         subprocess.Popen([sys.executable, os.path.join(HERE, "bot.py")], cwd=HERE, creationflags=flags, close_fds=True)
         await client.close()
         os._exit(0)
