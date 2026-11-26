@@ -1,65 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="454" viewBox="0 0 1200 454" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
-<rect width="1200" height="454" rx="28" fill="#F5F5F7"/>
-<text x="48" y="76" font-size="34" font-weight="600" fill="#1D1D1F" text-anchor="start" letter-spacing="-0.5">Replaces 30 apps.</text>
-<text x="48" y="110" font-size="18" font-weight="400" fill="#6E6E73" text-anchor="start">All of them in one 7 MB file, sharing one tiny engine.</text>
-<rect x="48" y="150" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="123.5" y="176" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">App launcher</text>
-<rect x="209" y="150" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="284.5" y="176" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Quick search</text>
-<rect x="370" y="150" width="179" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="459.5" y="176" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Desktop widgets</text>
-<rect x="559" y="150" width="188" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="653.0" y="176" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Rainmeter clocks</text>
-<rect x="757" y="150" width="179" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="846.5" y="176" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Live wallpapers</text>
-<rect x="946" y="150" width="160" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="1026.0" y="176" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Wallpaper app</text>
-<rect x="48" y="206" width="179" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="137.5" y="232" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Screenshot tool</text>
-<rect x="237" y="206" width="179" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="326.5" y="232" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Screen recorder</text>
-<rect x="426" y="206" width="170" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="511.0" y="232" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Taskbar styler</text>
-<rect x="606" y="206" width="133" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="672.5" y="232" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Start menu</text>
-<rect x="749" y="206" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="824.5" y="232" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Volume mixer</text>
-<rect x="910" y="206" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="985.5" y="232" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Game overlay</text>
-<rect x="48" y="262" width="142" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="119.0" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">FPS counter</text>
-<rect x="200" y="262" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="275.5" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Game library</text>
-<rect x="361" y="262" width="142" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="432.0" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Mini player</text>
-<rect x="513" y="262" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="588.5" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Sticky notes</text>
-<rect x="674" y="262" width="114" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="731.0" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Calendar</text>
-<rect x="798" y="262" width="123" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="859.5" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Reminders</text>
-<rect x="931" y="262" width="179" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="1020.5" y="288" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Timers &amp; alarms</text>
-<rect x="48" y="318" width="133" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="114.5" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Calculator</text>
-<rect x="191" y="318" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="266.5" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Guitar tuner</text>
-<rect x="352" y="318" width="142" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="423.0" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Guitar tabs</text>
-<rect x="504" y="318" width="95" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="551.5" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Looper</text>
-<rect x="609" y="318" width="160" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="689.0" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Voice changer</text>
-<rect x="779" y="318" width="133" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="845.5" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Soundboard</text>
-<rect x="922" y="318" width="198" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="1021.0" y="344" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Clipboard history</text>
-<rect x="48" y="374" width="216" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="156.0" y="400" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Notification center</text>
-<rect x="274" y="374" width="142" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="345.0" y="400" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Automations</text>
-<rect x="426" y="374" width="151" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="501.5" y="400" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Video editor</text>
-<rect x="587" y="374" width="142" height="40" rx="20" fill="#FFFFFF" stroke="#E5E5EA"/>
-<text x="658.0" y="400" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="middle">Power tools</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="510" viewBox="0 0 1200 510" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000000" flood-opacity="0.08"/></filter></defs>
+  <rect width="1200" height="510" rx="28" fill="#F5F5F7"/>
+  <text x="48" y="72" font-size="34" font-weight="700" fill="#1D1D1F" letter-spacing="-0.8">Replaces 30 separate utilities.</text>
+  <text x="48" y="106" font-size="18" font-weight="400" fill="#6E6E73">Everything shares one 11 MB native Windows executable — no Electron, no browser engine.</text>
+  <rect x="48" y="138" width="352" height="332" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1" filter="url(#sh)"/><text x="72" y="176" font-size="17" font-weight="600" fill="#1D1D1F" letter-spacing="-0.2">Desktop &amp; Shell</text><line x1="72" y1="188" x2="376" y2="188" stroke="#E5E5EA" stroke-width="1"/><circle cx="76" cy="199" r="3.5" fill="#0071E3"/><text x="90" y="204" font-size="14.5" font-weight="450" fill="#1D1D1F">App launcher &amp; Start menu</text><circle cx="76" cy="229" r="3.5" fill="#0071E3"/><text x="90" y="234" font-size="14.5" font-weight="450" fill="#1D1D1F">Spotlight-style instant search</text><circle cx="76" cy="259" r="3.5" fill="#0071E3"/><text x="90" y="264" font-size="14.5" font-weight="450" fill="#1D1D1F">Mac-style menu bar</text><circle cx="76" cy="289" r="3.5" fill="#0071E3"/><text x="90" y="294" font-size="14.5" font-weight="450" fill="#1D1D1F">Floating glass taskbar</text><circle cx="76" cy="319" r="3.5" fill="#0071E3"/><text x="90" y="324" font-size="14.5" font-weight="450" fill="#1D1D1F">Desktop widgets &amp; Rainmeter clocks</text><circle cx="76" cy="349" r="3.5" fill="#0071E3"/><text x="90" y="354" font-size="14.5" font-weight="450" fill="#1D1D1F">Live &amp; daily 4K wallpapers</text><circle cx="76" cy="379" r="3.5" fill="#0071E3"/><text x="90" y="384" font-size="14.5" font-weight="450" fill="#1D1D1F">Clipboard history</text><circle cx="76" cy="409" r="3.5" fill="#0071E3"/><text x="90" y="414" font-size="14.5" font-weight="450" fill="#1D1D1F">Notification Center</text><circle cx="76" cy="439" r="3.5" fill="#0071E3"/><text x="90" y="444" font-size="14.5" font-weight="450" fill="#1D1D1F">Dynamic Island overlay</text><rect x="424" y="138" width="352" height="332" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1" filter="url(#sh)"/><text x="448" y="176" font-size="17" font-weight="600" fill="#1D1D1F" letter-spacing="-0.2">Capture, Audio &amp; Creative</text><line x1="448" y1="188" x2="752" y2="188" stroke="#E5E5EA" stroke-width="1"/><circle cx="452" cy="199" r="3.5" fill="#FF9500"/><text x="466" y="204" font-size="14.5" font-weight="450" fill="#1D1D1F">Screenshot tool</text><circle cx="452" cy="229" r="3.5" fill="#FF9500"/><text x="466" y="234" font-size="14.5" font-weight="450" fill="#1D1D1F">Screen recorder</text><circle cx="452" cy="259" r="3.5" fill="#FF9500"/><text x="466" y="264" font-size="14.5" font-weight="450" fill="#1D1D1F">Per-app volume mixer</text><circle cx="452" cy="289" r="3.5" fill="#FF9500"/><text x="466" y="294" font-size="14.5" font-weight="450" fill="#1D1D1F">Desktop mini player</text><circle cx="452" cy="319" r="3.5" fill="#FF9500"/><text x="466" y="324" font-size="14.5" font-weight="450" fill="#1D1D1F">Voice &amp; soundboard tools</text><circle cx="452" cy="349" r="3.5" fill="#FF9500"/><text x="466" y="354" font-size="14.5" font-weight="450" fill="#1D1D1F">Guitar tuner &amp; tabs</text><circle cx="452" cy="379" r="3.5" fill="#FF9500"/><text x="466" y="384" font-size="14.5" font-weight="450" fill="#1D1D1F">Audio looper</text><circle cx="452" cy="409" r="3.5" fill="#FF9500"/><text x="466" y="414" font-size="14.5" font-weight="450" fill="#1D1D1F">Developer tools</text><circle cx="452" cy="439" r="3.5" fill="#FF9500"/><text x="466" y="444" font-size="14.5" font-weight="450" fill="#1D1D1F">Color &amp; unit conversions</text><rect x="800" y="138" width="352" height="332" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1" filter="url(#sh)"/><text x="824" y="176" font-size="17" font-weight="600" fill="#1D1D1F" letter-spacing="-0.2">Productivity &amp; Gaming</text><line x1="824" y1="188" x2="1128" y2="188" stroke="#E5E5EA" stroke-width="1"/><circle cx="828" cy="199" r="3.5" fill="#28CD41"/><text x="842" y="204" font-size="14.5" font-weight="450" fill="#1D1D1F">Calendar &amp; agenda</text><circle cx="828" cy="229" r="3.5" fill="#28CD41"/><text x="842" y="234" font-size="14.5" font-weight="450" fill="#1D1D1F">Reminders &amp; checklists</text><circle cx="828" cy="259" r="3.5" fill="#28CD41"/><text x="842" y="264" font-size="14.5" font-weight="450" fill="#1D1D1F">Timers, world clock &amp; alarms</text><circle cx="828" cy="289" r="3.5" fill="#28CD41"/><text x="842" y="294" font-size="14.5" font-weight="450" fill="#1D1D1F">Quick calculator</text><circle cx="828" cy="319" r="3.5" fill="#28CD41"/><text x="842" y="324" font-size="14.5" font-weight="450" fill="#1D1D1F">Sticky notes</text><circle cx="828" cy="349" r="3.5" fill="#28CD41"/><text x="842" y="354" font-size="14.5" font-weight="450" fill="#1D1D1F">600+ action Shortcuts</text><circle cx="828" cy="379" r="3.5" fill="#28CD41"/><text x="842" y="384" font-size="14.5" font-weight="450" fill="#1D1D1F">Unified Game Library</text><circle cx="828" cy="409" r="3.5" fill="#28CD41"/><text x="842" y="414" font-size="14.5" font-weight="450" fill="#1D1D1F">FPS &amp; frame-time game overlay</text><circle cx="828" cy="439" r="3.5" fill="#28CD41"/><text x="842" y="444" font-size="14.5" font-weight="450" fill="#1D1D1F">Windows Power Tools</text>
 </svg>

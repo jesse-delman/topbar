@@ -1,75 +1,140 @@
-<p align="center"><img src="assets/logo.png" width="128" alt="TopBar"></p>
+<p align="center">
+  <img src="assets/logo.png" width="96" alt="TopBar">
+</p>
 
 <h1 align="center">TopBar</h1>
 
-<p align="center">Every tool you use. One tiny app.<br><sub>For Windows 10 and 11 · free · no installer</sub></p>
+<p align="center">
+  A free, single-file Windows app that brings a Mac-style menu bar, Spotlight search, desktop widgets, a floating taskbar, and 22 built-in apps to Windows 10 and 11.<br>
+  <sub>Free forever · One small file · No installer · No account</sub>
+</p>
 
-<p align="center"><a href="https://github.com/jesse-delman/topbar/raw/main/TopBar.exe"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/download-dark.svg"><img src="assets/download.svg" width="560" alt="Download TopBar for Windows"></picture></a></p>
-
-<p align="center"><img src="https://img.shields.io/github/downloads/jesse-delman/topbar/total?style=flat-square&color=1D1D1F&label=downloads" alt="Downloads"></p>
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg"><img src="assets/hero.svg" width="100%" alt="Every tool you use. One tiny app."></picture></p>
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app02d.png"><img src="assets/icons/app02.png" width="60" alt="Clock"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app00d.png"><img src="assets/icons/app00.png" width="60" alt="Calendar"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app21d.png"><img src="assets/icons/app21.png" width="60" alt="Shortcuts"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app14d.png"><img src="assets/icons/app14.png" width="60" alt="Wallpapers"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app19d.png"><img src="assets/icons/app19.png" width="60" alt="Game Library"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app13d.png"><img src="assets/icons/app13.png" width="60" alt="Studio"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app11d.png"><img src="assets/icons/app11.png" width="60" alt="Guitar Tabs"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app12d.png"><img src="assets/icons/app12.png" width="60" alt="Tuner"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app07d.png"><img src="assets/icons/app07.png" width="60" alt="Widgets"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app20d.png"><img src="assets/icons/app20.png" width="60" alt="Notifications"></picture>&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app06d.png"><img src="assets/icons/app06.png" width="60" alt="Settings"></picture></p>
-
-<br>
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/facts-dark.svg"><img src="assets/facts.svg" width="100%" alt="Fast facts"></picture></p>
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/perf-dark.svg"><img src="assets/perf.svg" width="100%" alt="36 times less memory, 200 times smaller"></picture></p>
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/replaces-dark.svg"><img src="assets/replaces.svg" width="100%" alt="Replaces 30 apps"></picture></p>
+<p align="center">
+  <a href="https://github.com/jesse-delman/topbar/raw/main/TopBar.exe"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/download-dark.svg"><img src="assets/download.svg" width="560" alt="Download TopBar for Windows"></picture></a>
+</p>
 
 <br>
 
-## What's inside
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg"><img src="assets/hero.svg" width="100%" alt="TopBar for Windows — Every tool you use. One tiny app."></picture>
+</p>
 
-**Search.** Press the Windows key or Alt + Space. Apps, every file on your PC the moment it's saved, settings, math, units, timers, music and more than 1,400 commands. Round buttons narrow it to apps, files, shortcuts or your clipboard.
+<br>
 
-**Shortcuts** `BETA`. Build your own automations from 600+ actions: text, math, files, windows, keys, media, web and every Search command. Run them from Search, a key, or let them start by themselves at a time, when an app opens, when you plug in, join Wi-Fi or a file lands in a folder.
+## What it replaces
 
-**Wallpapers.** Thousands of free wallpapers searched as you type, Bing's daily photo in 4K, and live wallpapers drawn by your graphics card that follow your pointer and rest when a window covers them. Save your whole desktop look as a preset and switch back any time.
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/replaces-dark.svg"><img src="assets/replaces.svg" width="100%" alt="Replaces 30 separate Windows utilities"></picture>
+</p>
 
-**Menu bar and taskbar.** The app you're in and its menus, time, CPU, memory, Wi-Fi, volume per app, battery and music. A glass taskbar you can shape: alignment, roundness, see-through, magnify on hover, app names, badges.
+<br>
 
-**Widgets.** Clocks, weather, calendar, notes, music, stats, photos, timers, app launchers and Rainmeter clocks on your desktop.
+## Built-in apps &amp; features
 
-**Dynamic Island** `BETA`. A pill at the top for music, calls, timers, recording and every TopBar event, so nothing slips by.
+Press the **Windows key** or **Alt + Space** to open Spotlight Search for apps, instant file search, math, unit conversions, clipboard history, and 1,400+ commands — or launch any of the 22 built-in tools below:
 
-**Games.** Ctrl + Shift + G for FPS with averages, 1% and 0.1% lows, frame times, GPU and CPU, and how much memory the game uses. A Game Library with every game from Steam, Epic, GOG, Ubisoft, Xbox, EA, Battle.net and Riot.
+<table>
+  <tr>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app00d.png"><img src="assets/icons/app00.png" width="52" alt="Calendar"></picture><br><b>Calendar</b><br><sub>Schedule, agenda &amp; live date</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app01d.png"><img src="assets/icons/app01.png" width="52" alt="Reminders"></picture><br><b>Reminders</b><br><sub>Checklists, flags &amp; repeats</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app02d.png"><img src="assets/icons/app02.png" width="52" alt="Clock"></picture><br><b>Clock</b><br><sub>World clocks, alarms &amp; timers</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app03d.png"><img src="assets/icons/app03.png" width="52" alt="Calculator"></picture><br><b>Calculator</b><br><sub>Fast math right from desktop</sub><br><br></td>
+  </tr>
+  <tr>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app04d.png"><img src="assets/icons/app04.png" width="52" alt="Screenshot"></picture><br><b>Screenshot</b><br><sub>Instant region &amp; window capture</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app05d.png"><img src="assets/icons/app05.png" width="52" alt="Screen Recorder"></picture><br><b>Screen Recorder</b><br><sub>Live preview &amp; audio mixer</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app06d.png"><img src="assets/icons/app06.png" width="52" alt="TopBar Settings"></picture><br><b>TopBar Settings</b><br><sub>Mac-organized preferences</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app07d.png"><img src="assets/icons/app07.png" width="52" alt="Widgets"></picture><br><b>Widgets</b><br><sub>Weather, notes, stats &amp; more</sub><br><br></td>
+  </tr>
+  <tr>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app08d.png"><img src="assets/icons/app08.png" width="52" alt="Mic &amp; Sound"></picture><br><b>Mic &amp; Sound</b><br><sub>Clean mic control &amp; effects</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app09d.png"><img src="assets/icons/app09.png" width="52" alt="Control Center"></picture><br><b>Control Center</b><br><sub>Wi-Fi, display &amp; quick toggles</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app10d.png"><img src="assets/icons/app10.png" width="52" alt="Loop"></picture><br><b>Loop</b><br><sub>Instant audio loop station</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app11d.png"><img src="assets/icons/app11.png" width="52" alt="Guitar Tabs"></picture><br><b>Guitar Tabs</b><br><sub>Song tabs &amp; chord sheets</sub><br><br></td>
+  </tr>
+  <tr>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app12d.png"><img src="assets/icons/app12.png" width="52" alt="Tuner"></picture><br><b>Tuner</b><br><sub>Real-time instrument tuner</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app14d.png"><img src="assets/icons/app14.png" width="52" alt="Wallpapers"></picture><br><b>Wallpapers</b><br><sub>4K daily, search &amp; live scenes</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app15d.png"><img src="assets/icons/app15.png" width="52" alt="Clock Store"></picture><br><b>Clock Store</b><br><sub>Desktop &amp; Rainmeter clock skins</sub><br><br></td>
+  </tr>
+  <tr>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app16d.png"><img src="assets/icons/app16.png" width="52" alt="Feedback"></picture><br><b>Feedback</b><br><sub>Direct replies inside TopBar</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app18d.png"><img src="assets/icons/app18.png" width="52" alt="TopBar Apps"></picture><br><b>TopBar Apps</b><br><sub>All built-in apps in one grid</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app19d.png"><img src="assets/icons/app19.png" width="52" alt="Game Library"></picture><br><b>Game Library</b><br><sub>Steam, Epic, Xbox, Riot &amp; more</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app20d.png"><img src="assets/icons/app20.png" width="52" alt="Notifications"></picture><br><b>Notifications</b><br><sub>Unified Notification Center</sub><br><br></td>
+  </tr>
+  <tr>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app21d.png"><img src="assets/icons/app21.png" width="52" alt="Shortcuts"></picture><br><b>Shortcuts</b><br><sub>600+ action automations (Beta)</sub><br><br></td>
+    <td align="center" width="25%" valign="top"><br><picture><source media="(prefers-color-scheme: dark)" srcset="assets/icons/app22d.png"><img src="assets/icons/app22.png" width="52" alt="Developer Tools"></picture><br><b>Developer Tools</b><br><sub>Test notifications, replies &amp; updates</sub><br><br></td>
+    <td width="25%"></td>
+    <td width="25%"></td>
+  </tr>
+</table>
 
-**Studio** `BETA`. A real multi-track editor in glass: media pool, viewer with scopes and safe zones, inspector, and a timeline with video, caption and audio tracks. Blade, trim, slip, ripple, keyframes, transitions, titles, captions, green screen, masks, blend modes, layouts, colour grading with LUTs and colour matching, beat cutting, music that dips under voices, and export to MP4, HEVC, GIF, WAV, PNG or SRT.
+Also included: **Dynamic Island** (`Beta`) at the top of your screen for live music, timers, calls, and recordings, plus a **Ctrl + Shift + G** Game Overlay with FPS, 1% / 0.1% lows, frame times, and GPU/CPU stats.
 
-**And more.** Voice changer with realistic voices and a virtual mic, soundboard, notes, screenshots and recording, guitar tabs, tuner and looper, calendar, reminders, clock, calculator, Notification Center, mini player and Power Tools.
+<br>
 
-## Get it
+## Speed &amp; memory
 
-1. Download **[TopBar.exe](https://github.com/jesse-delman/topbar/raw/main/TopBar.exe)**.
-2. Double-click it. A short tour shows you around.
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/perf-dark.svg"><img src="assets/perf.svg" width="100%" alt="TopBar speed, memory, and disk size comparison"></picture>
+</p>
 
-> Windows may say "Windows protected your PC" the first time, because the app is new. Click **More info**, then **Run anyway**.
+<br>
 
-It starts with Windows and updates itself.
+## Install
 
-## Ask for anything
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/install-dark.svg"><img src="assets/install.svg" width="100%" alt="Install TopBar in three steps"></picture>
+</p>
 
-Send feedback any time, about anything: a feature, a whole new app, a tiny fix. Every message is read, updates usually come out within hours, and **you get a reply right inside TopBar**. Open **Help › Feedback** or type **feedback** in Search.
+<p align="center">
+  <a href="https://github.com/jesse-delman/topbar/raw/main/TopBar.exe"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/download-btn-dark.svg"><img src="assets/download-btn.svg" width="236" alt="Download for Windows"></picture></a>
+</p>
 
-<details>
-<summary><b>Good to know</b></summary>
+<br>
 
-- **Runs on** Windows 10 and 11.
-- **Your data** stays on your PC, in `%APPDATA%\TopBar`.
-- **Updates** install by themselves while you're away; type **update** in Search to check now.
-- **FPS in the game overlay** asks Windows once for permission to read graphics events (one "Yes"), the same way Game Bar does.
-- **Remove it**: quit TopBar from its menu and delete `TopBar.exe`.
-- The memory and size comparisons are approximate and vary from PC to PC.
+## Frequently asked questions
+
+<details open>
+<summary><b>Why did Windows SmartScreen or my antivirus warn me?</b></summary>
+<br>
+TopBar is a free, independent app and is not code-signed with a paid commercial certificate, so Windows SmartScreen may show <i>"Windows protected your PC"</i> on first launch. Click <b>More info</b>, then <b>Run anyway</b> to open it.
 </details>
 
 <details>
-<summary><b>Credits</b></summary>
+<summary><b>Where is my data stored?</b></summary>
+<br>
+Everything stays locally on your PC in <code>%APPDATA%\TopBar</code> — settings, notes, reminders, calendars, shortcuts, and wallpapers. No account is required.
+</details>
 
-- Made by the developer.
-- Guitar Tabs uses [Basic Pitch](https://github.com/spotify/basic-pitch) by Spotify (Apache License 2.0), Demucs (htdemucs, downloaded on first use) and the songsterr-ai lead-guitar pipeline.
-- Wallpapers come from [Wallhaven](https://wallhaven.cc) and Bing. Clock Store skins are made by their own authors and shared on GitHub.
+<details>
+<summary><b>How do updates work?</b></summary>
+<br>
+TopBar checks for updates automatically and installs them quietly while you are away. You can also type <b>update</b> in Spotlight Search any time to check right away.
+</details>
+
+<details>
+<summary><b>How do I request a feature or report a bug?</b></summary>
+<br>
+Open <b>Help › Feedback</b> or type <b>feedback</b> in Search. Messages go straight to the developer, and replies show up right inside TopBar.
+</details>
+
+<details>
+<summary><b>How do I uninstall TopBar?</b></summary>
+<br>
+Quit TopBar from its menu bar and delete <code>TopBar.exe</code>. If you also want to clear saved settings and notes, delete <code>%APPDATA%\TopBar</code>.
+</details>
+
+<details>
+<summary><b>Credits &amp; third-party components</b></summary>
+<br>
+<ul>
+  <li>Built and maintained by the developer.</li>
+  <li>Text is set in <a href="https://rsms.me/inter/">Inter</a> by Rasmus Andersson (SIL Open Font License 1.1).</li>
+  <li>Guitar Tabs uses <a href="https://github.com/spotify/basic-pitch">Basic Pitch</a> by Spotify (Apache License 2.0) and Demucs (downloaded on first use).</li>
+  <li>Wallpapers are sourced from <a href="https://wallhaven.cc">Wallhaven</a> and Bing. Clock Store skins belong to their respective authors.</li>
+  <li>Memory and size comparisons are approximate and vary by system.</li>
+</ul>
 </details>

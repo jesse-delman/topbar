@@ -6,7 +6,7 @@
 <text x="72" y="216" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="start">memory in use</text>
 <text x="72" y="292" font-size="13" font-weight="400" fill="#6E6E73" text-anchor="start">less than one browser tab</text>
 <rect x="328" y="104" width="258" height="212" rx="18" fill="#FFFFFF"/>
-<text x="352" y="180" font-size="46" font-weight="600" fill="#1D1D1F" text-anchor="start" letter-spacing="-1">7 MB</text>
+<text x="352" y="180" font-size="46" font-weight="600" fill="#1D1D1F" text-anchor="start" letter-spacing="-1">11 MB</text>
 <text x="352" y="216" font-size="16" font-weight="500" fill="#1D1D1F" text-anchor="start">one file, no installer</text>
 <text x="352" y="292" font-size="13" font-weight="400" fill="#6E6E73" text-anchor="start">nothing else to download</text>
 <rect x="608" y="104" width="258" height="212" rx="18" fill="#FFFFFF"/>

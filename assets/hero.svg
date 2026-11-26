@@ -1,19 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
-<rect width="1200" height="560" rx="28" fill="#F5F5F7"/>
-<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#5E8BFF"/><stop offset=".5" stop-color="#BF5AF2"/><stop offset="1" stop-color="#FF5FA2"/></linearGradient><linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F2F2F7"/></linearGradient></defs>
-<text x="600" y="120" font-size="22" font-weight="500" fill="#6E6E73" text-anchor="middle">TopBar for Windows</text>
-<text x="600" y="200" font-size="72" font-weight="700" fill="#1D1D1F" text-anchor="middle" letter-spacing="-1.5">Every tool you use.</text>
-<text x="600" y="282" font-size="72" font-weight="700" fill="url(#g)" text-anchor="middle" letter-spacing="-1.5">One tiny app.</text>
-<text x="600" y="336" font-size="22" font-weight="400" fill="#6E6E73" text-anchor="middle">Menu bar, Search, widgets, taskbar, wallpapers and 20 apps. 25 MB of memory.</text>
-<rect x="300" y="392" width="440" height="64" rx="32" fill="url(#f)" stroke="#E5E5EA"/>
-<circle cx="340" cy="422" r="11" fill="none" stroke="#6E6E73" stroke-width="3"/><line x1="348" y1="430" x2="356" y2="438" stroke="#6E6E73" stroke-width="3" stroke-linecap="round"/>
-<text x="372" y="432" font-size="22" font-weight="400" fill="#6E6E73" text-anchor="start">Spotlight Search</text>
-<circle cx="788" cy="424" r="32" fill="url(#f)" stroke="#E5E5EA"/>
-<path d="M777 435 L788 412 L799 435 M780 427 H796" stroke="#6E6E73" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="864" cy="424" r="32" fill="url(#f)" stroke="#E5E5EA"/>
-<path d="M851 416 h9 l3 3 h14 v15 h-26 z M851 422 h26" stroke="#6E6E73" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
-<circle cx="940" cy="424" r="32" fill="url(#f)" stroke="#E5E5EA"/>
-<path d="M940 412 L952 419 L940 426 L928 419 Z M928 426 L940 433 L952 426" stroke="#6E6E73" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
-<circle cx="1016" cy="424" r="32" fill="url(#f)" stroke="#E5E5EA"/>
-<rect x="1007" y="413" width="15" height="19" rx="3" stroke="#6E6E73" stroke-width="2.4" fill="none"/><rect x="1011" y="417" width="15" height="19" rx="3" stroke="#6E6E73" stroke-width="2.4" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000000" flood-opacity="0.08"/></filter><filter id="sh_sm" x="-12%" y="-12%" width="124%" height="136%"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000000" flood-opacity="0.08"/></filter></defs>
+  <rect width="1200" height="620" rx="28" fill="#F5F5F7"/>
+
+  <!-- Quiet editorial typography header -->
+  <text x="600" y="76" font-size="16" font-weight="600" fill="#0071E3" text-anchor="middle" letter-spacing="0.4">TOPBAR FOR WINDOWS 10 &amp; 11</text>
+  <text x="600" y="140" font-size="56" font-weight="700" fill="#1D1D1F" text-anchor="middle" letter-spacing="-1.6">Every tool you use. One tiny app.</text>
+  <text x="600" y="182" font-size="20" font-weight="400" fill="#6E6E73" text-anchor="middle">Mac-style menu bar, Spotlight search, desktop widgets, glass taskbar, and 22 built-in apps in 11 MB.</text>
+
+  <!-- Minimalist desktop mockup showcase -->
+  <rect x="72" y="220" width="1056" height="352" rx="22" fill="#E9ECF2" stroke="#E5E5EA" stroke-width="1.5"/>
+
+  <!-- Top Menu Bar -->
+  <rect x="88" y="234" width="1024" height="34" rx="12" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1" filter="url(#sh_sm)"/>
+  <circle cx="110" cy="251" r="6" fill="#0071E3"/>
+  <text x="128" y="256" font-size="13" font-weight="700" fill="#1D1D1F">TopBar</text>
+  <text x="190" y="256" font-size="13" font-weight="500" fill="#6E6E73">File</text>
+  <text x="228" y="256" font-size="13" font-weight="500" fill="#6E6E73">Edit</text>
+  <text x="268" y="256" font-size="13" font-weight="500" fill="#6E6E73">View</text>
+  <text x="314" y="256" font-size="13" font-weight="500" fill="#6E6E73">Window</text>
+  <!-- Dynamic Island center pill -->
+  <rect x="536" y="241" width="128" height="20" rx="10" fill="#0B0B0D"/>
+  <circle cx="554" cy="251" r="4" fill="#28CD41"/>
+  <rect x="566" y="248" width="54" height="6" rx="3" fill="#FFFFFF" fill-opacity="0.72"/>
+  <rect x="630" y="247" width="3" height="8" rx="1.5" fill="#0071E3"/>
+  <rect x="636" y="245" width="3" height="12" rx="1.5" fill="#0071E3"/>
+  <rect x="642" y="248" width="3" height="6" rx="1.5" fill="#0071E3"/>
+  <!-- Right status cluster -->
+  <text x="906" y="256" font-size="12" font-weight="500" fill="#6E6E73">CPU 1%</text>
+  <text x="968" y="256" font-size="12" font-weight="500" fill="#6E6E73">25 MB</text>
+  <text x="1032" y="256" font-size="13" font-weight="600" fill="#1D1D1F">9:41 AM</text>
+
+  <!-- Left Desktop Widget Card (Weather) -->
+  <rect x="104" y="294" width="210" height="162" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1" filter="url(#sh)"/>
+  <circle cx="144" cy="336" r="14" fill="#FF9500"/>
+  <rect x="130" y="340" width="34" height="16" rx="8" fill="#0071E3"/>
+  <text x="128" y="400" font-size="38" font-weight="600" fill="#1D1D1F" letter-spacing="-1">72°</text>
+  <text x="128" y="426" font-size="13" font-weight="500" fill="#6E6E73">Partly Cloudy · H:75° L:61°</text>
+
+  <!-- Center Floating Spotlight Search Card -->
+  <rect x="348" y="294" width="504" height="162" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.2" filter="url(#sh)"/>
+  <!-- Search input row -->
+  <circle cx="386" cy="332" r="9.5" fill="none" stroke="#0071E3" stroke-width="2.6"/>
+  <line x1="393" y1="339" x2="399" y2="345" stroke="#0071E3" stroke-width="2.6" stroke-linecap="round"/>
+  <text x="412" y="338" font-size="18" font-weight="500" fill="#1D1D1F">240 km to miles</text>
+  <rect x="760" y="317" width="70" height="28" rx="14" fill="#EAF4FF"/>
+  <text x="795" y="336" font-size="12" font-weight="600" fill="#0071E3" text-anchor="middle">Enter</text>
+  <line x1="368" y1="364" x2="832" y2="364" stroke="#E5E5EA" stroke-width="1"/>
+  <!-- Instant Top Hit result row -->
+  <rect x="366" y="376" width="468" height="64" rx="14" fill="#FAFAFC" stroke="#E5E5EA" stroke-width="1"/>
+  <rect x="382" y="388" width="40" height="40" rx="11" fill="#0071E3"/>
+  <text x="402" y="414" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">⇄</text>
+  <text x="436" y="406" font-size="16" font-weight="600" fill="#1D1D1F">149.13 miles</text>
+  <text x="436" y="426" font-size="13" font-weight="400" fill="#6E6E73">Conversion · Press Enter to copy</text>
+
+  <!-- Right Desktop Widget Card (Now Playing / Stats) -->
+  <rect x="886" y="294" width="210" height="162" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1" filter="url(#sh)"/>
+  <text x="910" y="328" font-size="12" font-weight="600" fill="#6E6E73" letter-spacing="0.4">SYSTEM</text>
+  <text x="910" y="370" font-size="30" font-weight="700" fill="#1D1D1F" letter-spacing="-0.8">~0%</text>
+  <text x="984" y="370" font-size="14" font-weight="500" fill="#6E6E73">idle CPU</text>
+  <rect x="910" y="394" width="162" height="8" rx="4" fill="#E5E5EA"/>
+  <rect x="910" y="394" width="22" height="8" rx="4" fill="#28CD41"/>
+  <text x="910" y="430" font-size="13" font-weight="500" fill="#6E6E73">25 MB RAM · 11 MB file</text>
+
+  <!-- Bottom Floating Glass Taskbar / Dock -->
+  <rect x="372" y="494" width="456" height="58" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.2" filter="url(#sh)"/>
+  <rect x="394" y="505" width="36" height="36" rx="10" fill="#FF453A"/>
+  <rect x="444" y="505" width="36" height="36" rx="10" fill="#0A84FF"/>
+  <rect x="494" y="505" width="36" height="36" rx="10" fill="#FF9F0A"/>
+  <rect x="544" y="505" width="36" height="36" rx="10" fill="#30D158"/>
+  <rect x="594" y="505" width="36" height="36" rx="10" fill="#AF52DE"/>
+  <rect x="644" y="505" width="36" height="36" rx="10" fill="#32ADE6"/>
+  <line x1="696" y1="511" x2="696" y2="535" stroke="#D2D2D7" stroke-width="1.5"/>
+  <rect x="712" y="505" width="36" height="36" rx="10" fill="#FF375F"/>
+  <rect x="762" y="505" width="36" height="36" rx="10" fill="#8E8E93"/>
+  <circle cx="462" cy="547" r="2.2" fill="#0071E3"/>
+  <circle cx="562" cy="547" r="2.2" fill="#0071E3"/>
 </svg>

@@ -1,26 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
-<rect width="1200" height="540" rx="28" fill="#1C1C1E"/>
-<defs><linearGradient id="p" x1="0" x2="1"><stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#BF5AF2"/></linearGradient><linearGradient id="q" x1="0" x2="1"><stop offset="0" stop-color="#30D158"/><stop offset="1" stop-color="#64D2FF"/></linearGradient></defs>
-<text x="48" y="76" font-size="34" font-weight="600" fill="#F5F5F7" text-anchor="start" letter-spacing="-0.5">Less is more.</text>
-<text x="48" y="110" font-size="18" font-weight="400" fill="#A1A1A6" text-anchor="start">Everything TopBar does, compared with the separate apps it replaces.</text>
-<text x="48" y="220" font-size="20" font-weight="600" fill="#F5F5F7" text-anchor="start">TopBar</text>
-<text x="125.0" y="220" font-size="16" font-weight="400" fill="#A1A1A6" text-anchor="start">memory · 25 MB</text>
-<rect x="48" y="236" width="1104" height="6" rx="3" fill="#2C2C2E"/>
-<rect x="48" y="236" width="31" height="6" rx="3" fill="url(#p)"/>
-<text x="1152" y="194" font-size="44" font-weight="700" fill="#F5F5F7" text-anchor="end" letter-spacing="-1">36×</text>
-<text x="1152" y="220" font-size="15" font-weight="600" fill="#A1A1A6" text-anchor="end">less memory</text>
-<text x="48" y="300" font-size="20" font-weight="600" fill="#F5F5F7" text-anchor="start">The separate apps</text>
-<text x="251.5" y="300" font-size="16" font-weight="400" fill="#A1A1A6" text-anchor="start">memory · ~900 MB</text>
-<rect x="48" y="316" width="1104" height="6" rx="3" fill="#2C2C2E"/>
-<rect x="48" y="316" width="1104" height="6" rx="3" fill="#8E8E93"/>
-<text x="48" y="400" font-size="20" font-weight="600" fill="#F5F5F7" text-anchor="start">TopBar</text>
-<text x="125.0" y="400" font-size="16" font-weight="400" fill="#A1A1A6" text-anchor="start">on your drive · 7 MB</text>
-<rect x="48" y="416" width="1104" height="6" rx="3" fill="#2C2C2E"/>
-<rect x="48" y="416" width="10" height="6" rx="3" fill="url(#q)"/>
-<text x="1152" y="374" font-size="44" font-weight="700" fill="#F5F5F7" text-anchor="end" letter-spacing="-1">200×</text>
-<text x="1152" y="400" font-size="15" font-weight="600" fill="#A1A1A6" text-anchor="end">smaller</text>
-<text x="48" y="480" font-size="20" font-weight="600" fill="#F5F5F7" text-anchor="start">The separate apps</text>
-<text x="251.5" y="480" font-size="16" font-weight="400" fill="#A1A1A6" text-anchor="start">on your drive · ~1,500 MB</text>
-<rect x="48" y="496" width="1104" height="6" rx="3" fill="#2C2C2E"/>
-<rect x="48" y="496" width="1104" height="6" rx="3" fill="#8E8E93"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="552" viewBox="0 0 1200 552" font-family="Inter, -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs><filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000000" flood-opacity="0.42"/></filter></defs>
+  <rect width="1200" height="552" rx="28" fill="#111113"/>
+  <text x="48" y="72" font-size="34" font-weight="700" fill="#F5F5F7" letter-spacing="-0.8">Built to stay out of your way.</text>
+  <text x="48" y="104" font-size="18" font-weight="400" fill="#98989D">Approximate footprint compared with running separate utilities side by side.</text>
+
+  <rect x="48" y="134" width="258" height="148" rx="20" fill="#1C1C1E" stroke="#2C2C2E" stroke-width="1" filter="url(#sh)"/><text x="72" y="194" font-size="40" font-weight="700" fill="#F5F5F7" letter-spacing="-1.2">~25 MB</text><text x="72" y="224" font-size="15" font-weight="600" fill="#F5F5F7">memory at rest</text><text x="72" y="252" font-size="13" font-weight="400" fill="#98989D">Less than a single browser tab</text><rect x="330" y="134" width="258" height="148" rx="20" fill="#1C1C1E" stroke="#2C2C2E" stroke-width="1" filter="url(#sh)"/><text x="354" y="194" font-size="40" font-weight="700" fill="#F5F5F7" letter-spacing="-1.2">11 MB</text><text x="354" y="224" font-size="15" font-weight="600" fill="#F5F5F7">one portable .exe</text><text x="354" y="252" font-size="13" font-weight="400" fill="#98989D">Zero installer or runtimes</text><rect x="612" y="134" width="258" height="148" rx="20" fill="#1C1C1E" stroke="#2C2C2E" stroke-width="1" filter="url(#sh)"/><text x="636" y="194" font-size="40" font-weight="700" fill="#F5F5F7" letter-spacing="-1.2">~0%</text><text x="636" y="224" font-size="15" font-weight="600" fill="#F5F5F7">CPU while idle</text><text x="636" y="252" font-size="13" font-weight="400" fill="#98989D">Sleeps until you interact</text><rect x="894" y="134" width="258" height="148" rx="20" fill="#1C1C1E" stroke="#2C2C2E" stroke-width="1" filter="url(#sh)"/><text x="918" y="194" font-size="40" font-weight="700" fill="#F5F5F7" letter-spacing="-1.2">1,400+</text><text x="918" y="224" font-size="15" font-weight="600" fill="#F5F5F7">Search commands</text><text x="918" y="252" font-size="13" font-weight="400" fill="#98989D">Apps, files, math, and actions</text>
+
+  <!-- Clean comparison card -->
+  <rect x="48" y="306" width="1104" height="206" rx="20" fill="#1C1C1E" stroke="#2C2C2E" stroke-width="1" filter="url(#sh)"/>
+
+  <!-- Memory row -->
+  <text x="76" y="352" font-size="16" font-weight="600" fill="#F5F5F7">Memory in use</text>
+  <text x="204" y="352" font-size="14" font-weight="500" fill="#0A84FF">TopBar ~25 MB</text>
+  <text x="326" y="352" font-size="14" font-weight="400" fill="#98989D">vs. separate apps ~900 MB</text>
+  <text x="1124" y="356" font-size="26" font-weight="700" fill="#F5F5F7" text-anchor="end" letter-spacing="-0.6">36× less RAM</text>
+  <rect x="76" y="368" width="1048" height="10" rx="5" fill="#2C2C2E"/>
+  <rect x="76" y="368" width="1048" height="10" rx="5" fill="#636366" fill-opacity="0.32"/>
+  <rect x="76" y="368" width="32" height="10" rx="5" fill="#0A84FF"/>
+
+  <line x1="76" y1="406" x2="1124" y2="406" stroke="#2C2C2E" stroke-width="1"/>
+
+  <!-- Disk row -->
+  <text x="76" y="452" font-size="16" font-weight="600" fill="#F5F5F7">Size on disk</text>
+  <text x="184" y="452" font-size="14" font-weight="500" fill="#30D158">TopBar 11 MB</text>
+  <text x="290" y="452" font-size="14" font-weight="400" fill="#98989D">vs. separate apps ~1,500 MB</text>
+  <text x="1124" y="456" font-size="26" font-weight="700" fill="#F5F5F7" text-anchor="end" letter-spacing="-0.6">130× smaller</text>
+  <rect x="76" y="468" width="1048" height="10" rx="5" fill="#2C2C2E"/>
+  <rect x="76" y="468" width="1048" height="10" rx="5" fill="#636366" fill-opacity="0.32"/>
+  <rect x="76" y="468" width="14" height="10" rx="5" fill="#30D158"/>
 </svg>
