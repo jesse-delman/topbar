@@ -151,10 +151,31 @@ async def send_reply(code: str, text: str, atts=()) -> str:
                     "content": base64.b64encode(body.encode("utf-8")).decode()}
             async with s.put(url, json=data) as r:
                 if r.status in (200, 201):
+                    k = sum(1 for ln in body.splitlines() if ln.strip().upper().startswith(code + " ") or ln.strip().upper().startswith(code + "|"))
+                    await push_now(reply_topic(code), f"{k}|{line.split(' | ', 1)[1] if ' | ' in line else line}")
                     return ""
                 if r.status != 409:
                     return f"GitHub said {r.status} saving replies.txt"
     return "replies.txt kept changing, try again"
+
+
+def reply_topic(code: str) -> str:
+    """The private channel one TopBar listens on: a hash of its reply code (nobody can guess it from the code)."""
+    import hashlib
+    return "tbr-" + hashlib.sha256((code.upper() + "|topbar-replies-v1").encode()).hexdigest()[:28]
+
+
+ANN_TOPIC = "tba-" + __import__("hashlib").sha256(b"topbar-announcements-v1").hexdigest()[:28]
+
+
+async def push_now(topic: str, text: str):
+    """Delivers within a second through ntfy.sh (TopBar keeps a connection open). replies.txt stays the backup."""
+    try:
+        async with aiohttp.ClientSession() as s:
+            async with s.post(f"https://ntfy.sh/{topic}", data=text.encode("utf-8"), headers={"Cache": "no", "Firebase": "no"}) as r:
+                await r.read()
+    except Exception:
+        pass
 
 
 # ---------------------------------------------------------------- updates itself from GitHub within seconds of a change
@@ -392,6 +413,7 @@ async def send_announcement(subject: str, text: str, atts=()) -> str:
                 data["sha"] = sha
             async with s.put(url, json=data) as r:
                 if r.status in (200, 201):
+                    await push_now(ANN_TOPIC, line)
                     return ""
                 if r.status != 409:
                     return f"GitHub said {r.status} saving announcements.txt"
