@@ -366,6 +366,47 @@ async def on_message(msg: discord.Message):
         await msg.add_reaction("\u2705")  # sent; shows up in their TopBar within about 20 seconds
 
 
+async def send_announcement(subject: str, text: str, atts=()) -> str:
+    """Add 'ANN | id | unix time | subject | text ||| file-url ...' to announcements.txt: every TopBar shows it once."""
+    import time as _t
+    aid = str(int(_t.time() * 1000))
+    urls = await upload_files("ANN" + aid, list(atts)) if atts else []
+    def clean(v):
+        return v.replace("\r", "").replace("|", "❘").replace("\n", "\\n").strip()
+    line = f"ANN | {aid} | {int(_t.time())} | {clean(subject)} | {clean(text) or '(see the attachment)'}" + "".join(f" ||| {u}" for u in urls)
+    url = f"https://api.github.com/repos/{REPO}/contents/announcements.txt"
+    h = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
+    async with aiohttp.ClientSession(headers=h) as s:
+        for _ in range(3):
+            sha, body = None, ""
+            async with s.get(url) as r:
+                if r.status == 200:
+                    j = await r.json(); sha = j["sha"]; body = base64.b64decode(j["content"]).decode("utf-8")
+                elif r.status != 404:
+                    return f"GitHub said {r.status} reading announcements.txt"
+            if body and not body.endswith("\n"):
+                body += "\n"
+            body += line + "\n"
+            data = {"message": f"Announcement: {subject[:60]}", "content": base64.b64encode(body.encode("utf-8")).decode()}
+            if sha:
+                data["sha"] = sha
+            async with s.put(url, json=data) as r:
+                if r.status in (200, 201):
+                    return ""
+                if r.status != 409:
+                    return f"GitHub said {r.status} saving announcements.txt"
+    return "announcements.txt kept changing, try again"
+
+
+@tree.command(description="Send an announcement to everyone who uses TopBar (**bold**, *italic*, __underline__, `code`)")
+async def announce(inter: discord.Interaction, subject: str, message: str, file: discord.Attachment = None):
+    if not allowed(inter.user, inter.permissions):
+        return await inter.response.send_message("Only the developer can send announcements.", ephemeral=True)
+    await inter.response.defer(ephemeral=True)
+    err = await send_announcement(subject, message, [file] if file else [])
+    await inter.followup.send(f"Couldn't send: {err}" if err else f"Announced to everyone: **{subject}**", ephemeral=True)
+
+
 @tree.command(description="Send a reply to someone's TopBar by their reply code (a file or picture can go with it)")
 async def reply(inter: discord.Interaction, code: str, message: str, file: discord.Attachment = None):
     if not allowed(inter.user, inter.permissions):
