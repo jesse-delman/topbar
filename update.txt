@@ -1,7 +1,9 @@
-version=11.0.26
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/acee22a1e1d5511e03db7e6acecbe049ae796dc9/TopBar.exe
-sha256=64a017ca27ab61a1cff3c57455442abccf086a473615460e54ed1ad590d71cde
-notes=New icons in Settings, Mouse Shake, taskbar menu, Spotlight and Microsoft Store
+version=11.0.27
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/57007dd1cf3a6b696b1c5a8284f04b68855f6c92/TopBar.exe
+sha256=8064405b31f55d13abd574f27c3f6c4867fe2f641bf454666b924757a7d9b13a
+notes=New icons in every menu
+new=New icons in every menu
+n2=11.0.27|New icons in every menu
 new=New icons in every corner
 n2=11.0.26|New icons in every corner
 new=All-new icons
