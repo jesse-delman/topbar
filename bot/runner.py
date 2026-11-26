@@ -24,7 +24,10 @@ while True:
     except Exception as ex:
         code = -1
         log(f"runner: couldn't start the bot: {ex}")
-    if code == 3:                      # it updated itself: start the new version straight away
+    if code == 4:                      # wrong bot token: no point hammering Discord, check keys.txt every minute
+        time.sleep(60)
+        continue
+    if code in (3, 5):                 # it updated itself / restarts without the Message Content intent: start straight away
         fails = 0
         time.sleep(1)
         continue

@@ -31,8 +31,13 @@ CHANNEL = int(os.environ["FEEDBACK_CHANNEL_ID"])
 REPO = os.environ.get("REPO", "jesse-delman/topbar")
 OWNER_ID = int(os.environ.get("OWNER_ID", "0"))  # only this person can reply (0 = anyone with Manage Messages)
 
+import time as _time
+NOFLAG = os.path.join(HERE, "no_content_intent")
+NO_CONTENT = os.path.exists(NOFLAG) and _time.time() - os.path.getmtime(NOFLAG) < 600
+if os.path.exists(NOFLAG) and not NO_CONTENT:
+    os.remove(NOFLAG)
 intents = discord.Intents.default()
-intents.message_content = True
+intents.message_content = not NO_CONTENT
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
@@ -116,15 +121,21 @@ async def upload_files(code: str, atts) -> list:
     h = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
     async with aiohttp.ClientSession(headers=h) as s:
         for a in atts:   # every file, however many
-            if a.size > 95_000_000:   # GitHub's own limit for one file
-                continue
             data = await a.read()
             name = re.sub(r"[^A-Za-z0-9._-]", "_", a.filename)[:80] or "file"
             path = f"replies/{code}-{a.id}-{name}"
-            body = {"message": f"Reply file for {code}", "content": base64.b64encode(data).decode()}
-            async with s.put(f"https://api.github.com/repos/{REPO}/contents/{path}", json=body) as r:
-                if r.status in (200, 201):
-                    urls.append(f"https://raw.githubusercontent.com/{REPO}/main/{path}")
+            # no size limit: anything bigger than one GitHub file goes up in 40 MB pieces that TopBar joins back together
+            PART = 40_000_000
+            pieces = [data[i:i + PART] for i in range(0, len(data), PART)] or [b""]
+            ok = True
+            for n, piece in enumerate(pieces):
+                pp = path if len(pieces) == 1 else f"{path}.part{n + 1}of{len(pieces)}"
+                body = {"message": f"Reply file for {code}", "content": base64.b64encode(piece).decode()}
+                async with s.put(f"https://api.github.com/repos/{REPO}/contents/{pp}", json=body) as r:
+                    ok = ok and r.status in (200, 201)
+            if ok:
+                url = f"https://raw.githubusercontent.com/{REPO}/main/{path}"
+                urls.append(url if len(pieces) == 1 else f"{url}#parts={len(pieces)}")
     return urls
 
 
@@ -351,13 +362,37 @@ def is_report(msg: discord.Message) -> bool:
     return any(f.name == "Reply code" for e in msg.embeds for f in e.fields)
 
 
+@tree.error
+async def on_cmd_error(inter: discord.Interaction, err):
+    print("command failed:", repr(err))
+    msg = f"That didn't work: {getattr(err, 'original', err)}"
+    try:
+        if inter.response.is_done():
+            await inter.followup.send(msg, ephemeral=True)
+        else:
+            await inter.response.send_message(msg, ephemeral=True)
+    except Exception:
+        pass
+
+
 @client.event
 async def on_ready():
     if not getattr(client, "_upd", None):
         client._upd = client.loop.create_task(update_loop())
         client._guard = client.loop.create_task(guard_loop())
-    await tree.sync()
-    print(f"Logged in as {client.user}")
+    try:
+        await tree.sync()
+    except Exception as ex:
+        print("command sync failed:", repr(ex))
+    print(f"Online as {client.user}" + (" (without Message Content Intent)" if NO_CONTENT else ""), flush=True)
+    st = load_state()
+    if NO_CONTENT and _time.time() - st.get("warned_intent", 0) > 86400:   # once a day at most
+        st["warned_intent"] = _time.time(); save_state(st)
+        try:
+            ch = client.get_channel(CHANNEL) or await client.fetch_channel(CHANNEL)
+            await ch.send("Heads up: replying to a feedback message needs **Message Content Intent** turned on (discord.com/developers → your app → Bot → Privileged Gateway Intents). Until then use `/reply code message`.")
+        except Exception:
+            pass
 
 
 @client.event
@@ -370,8 +405,14 @@ async def on_message(msg: discord.Message):
             pass
         return
     # replying to a feedback message in Discord sends that reply to the person
-    if msg.author.bot or msg.channel.id != CHANNEL or not msg.reference or not (msg.content.strip() or msg.attachments):
+    in_feedback = msg.channel.id == CHANNEL or getattr(msg.channel, "parent_id", None) == CHANNEL
+    if msg.author.bot or not in_feedback or not msg.reference:
         return
+    if not (msg.content.strip() or msg.attachments):
+        if not NO_CONTENT:
+            return
+        # Discord hid the text from the bot: say exactly how to fix it instead of doing nothing
+        return await msg.reply("I can't read your reply's text: turn on **Message Content Intent** at discord.com/developers → your app → Bot, then it works. `/reply` works meanwhile.", mention_author=False)
     if not allowed(msg.author, msg.channel.permissions_for(msg.author) if msg.guild else None):
         return await msg.reply("Only the developer can reply to feedback (check OWNER_ID in keys.txt is your Discord user ID).", mention_author=False)
     try:
@@ -564,4 +605,17 @@ async def update_cmd(inter: discord.Interaction):
     await self_update(force=True)
 
 
-client.run(TOKEN)
+def main():
+    try:
+        client.run(TOKEN, log_handler=None)
+    except discord.PrivilegedIntentsRequired:
+        # remembered for 10 minutes, then it tries with the intent again (so switching it on later just works)
+        open(NOFLAG, "w").write("1")
+        print("Message Content Intent is off in the Discord developer portal: restarting without it (/reply still works)", flush=True)
+        raise SystemExit(5)
+    except discord.LoginFailure:
+        print("Discord refused the bot token in keys.txt (it was reset or mistyped). Put the current token in keys.txt.", flush=True)
+        raise SystemExit(4)
+
+
+main()
