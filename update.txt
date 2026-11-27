@@ -1,6 +1,6 @@
-version=11.0.46
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/4db391e28e16cac68e3522213413afcb9051d2a2/TopBar.exe
-sha256=ea7786926bbec5b279d92a97c83ceb10599394c330aafd442bed32ef47502a10
+version=11.0.47
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/c9444e331cf9d9992fbda6f28ab54fad975adfc7/TopBar.exe
+sha256=aa696a1ecfa97d5b69f6cf217eb4c8e09564cd436ab939aef1680f103bd90f05
 notes=Crash reports include the call chain
 new=Rebuilt around a live canvas
 n2=11.0.41|Rebuilt around a live canvas
