@@ -187,7 +187,7 @@ async def push_now(topic: str, text: str):
     for attempt in range(3):
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=8)) as s:
-                async with s.post(f"https://ntfy.sh/{topic}", data=data, headers={"Cache": "no", "Firebase": "no"}) as r:
+                async with s.post(f"https://ntfy.sh/{topic}", data=data, headers={"Firebase": "no"}) as r:
                     await r.read()
                     if r.status < 300:
                         return True
