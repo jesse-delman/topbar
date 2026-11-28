@@ -1,1 +1,2 @@
 ANN | 1795848978635 | 1795848978 | announcement test | hey, just checking if this actually works. this should send to everyone. sent at 10:56pm pst btw.
+ANN | 1795849180265 | 1795849180 | announcement test 2 | seeing the animation. this is what yall get for being beta testers. 💖
