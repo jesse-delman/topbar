@@ -7,7 +7,7 @@
 Replies are written to replies.txt in the GitHub repo, which TopBar already checks.
 Setup: see README.md in this folder. Secrets come from keys.txt next to this file only.
 """
-import base64, csv, io, json, os, re, sys, zipfile
+import asyncio, base64, csv, io, json, os, re, sys, zipfile
 from datetime import datetime, timedelta, timezone
 from collections import Counter
 
@@ -181,12 +181,20 @@ ANN_TOPIC = "tba-" + __import__("hashlib").sha256(b"topbar-announcements-v1").he
 
 async def push_now(topic: str, text: str):
     """Delivers within a second through ntfy.sh (TopBar keeps a connection open). replies.txt stays the backup."""
-    try:
-        async with aiohttp.ClientSession() as s:
-            async with s.post(f"https://ntfy.sh/{topic}", data=text.encode("utf-8"), headers={"Cache": "no", "Firebase": "no"}) as r:
-                await r.read()
-    except Exception:
-        pass
+    data = text.encode("utf-8")
+    if len(data) > 4000:   # ntfy turns longer messages into a file TopBar can't read: those arrive through the backup file a few seconds later
+        return False
+    for attempt in range(3):
+        try:
+            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=8)) as s:
+                async with s.post(f"https://ntfy.sh/{topic}", data=data, headers={"Cache": "no", "Firebase": "no"}) as r:
+                    await r.read()
+                    if r.status < 300:
+                        return True
+        except Exception:
+            pass
+        await asyncio.sleep(1 + attempt)
+    return False
 
 
 # ---------------------------------------------------------------- updates itself from GitHub within seconds of a change
@@ -439,6 +447,7 @@ async def send_announcement(subject: str, text: str, atts=()) -> str:
     def clean(v):
         return v.replace("\r", "").replace("|", "❘").replace("\n", "\\n").strip()
     line = f"ANN | {aid} | {int(_t.time())} | {clean(subject)} | {clean(text) or '(see the attachment)'}" + "".join(f" ||| {u}" for u in urls)
+    await push_now(ANN_TOPIC, line)   # straight to every open TopBar (within a second); announcements.txt below is for PCs that were off
     url = f"https://api.github.com/repos/{REPO}/contents/announcements.txt"
     h = {"Authorization": f"Bearer {GH_TOKEN}", "Accept": "application/vnd.github+json"}
     async with aiohttp.ClientSession(headers=h) as s:
@@ -457,7 +466,6 @@ async def send_announcement(subject: str, text: str, atts=()) -> str:
                 data["sha"] = sha
             async with s.put(url, json=data) as r:
                 if r.status in (200, 201):
-                    await push_now(ANN_TOPIC, line)
                     return ""
                 if r.status != 409:
                     return f"GitHub said {r.status} saving announcements.txt"
