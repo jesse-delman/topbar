@@ -78,6 +78,8 @@ def parse(msg: discord.Message):
         "was_doing": field(e, "Was doing"), "setup": field(e, "Setup"),
         "link": msg.jump_url, "id": msg.id, "dt": msg.created_at,
         "pc": field(e, "PC"), "crash": field(e, "Crash details"),
+        "is_reply": author.lstrip().startswith("\u21a9") or kind.lower() == "reply", "answering": field(e, "Answering your reply").lstrip("> ").strip(),
+        "recent": field(e, "Recently used"),
         "images": images_of(msg),
         "longtext": next((a for a in msg.attachments if a.filename == "message.txt"), None),
     }
@@ -478,7 +480,20 @@ async def announce(inter: discord.Interaction, subject: str, message: str, file:
         return await inter.response.send_message("Only the developer can send announcements.", ephemeral=True)
     await inter.response.defer(ephemeral=True)
     err = await send_announcement(subject, message, [file] if file else [])
-    await inter.followup.send(f"Couldn't send: {err}" if err else f"Announced to everyone: **{subject}**", ephemeral=True)
+    if err:
+        return await inter.followup.send(f"Couldn't send: {err}", ephemeral=True)
+    em = discord.Embed(title=subject[:256], description=message.replace("\\n", "\n")[:4000], color=0x6E7BFF, timestamp=datetime.now(timezone.utc))
+    em.set_author(name="\U0001F4E3 Announcement sent to everyone")
+    em.set_footer(text=f"Sent by {inter.user.display_name}")
+    if file and (file.content_type or "").startswith("image/"):
+        em.set_image(url=file.url)
+    elif file:
+        em.add_field(name="Attached", value=file.filename)
+    try:
+        await inter.channel.send(embed=em)   # stays in the channel as a record
+        await inter.followup.send("Sent. It's in the channel above.", ephemeral=True)
+    except Exception:
+        await inter.followup.send(f"Announced to everyone: **{subject}**", embed=em, ephemeral=False)
 
 
 @tree.command(description="Send a reply to someone's TopBar by their reply code (a file or picture can go with it)")
@@ -536,15 +551,42 @@ def pc_text(p):
     return "\n".join(x for x in (p["windows"], p["pc"]) if x).strip()
 
 
-def build_txt(fb):
-    out = [f"TopBar feedback: {len(fb)} messages", ""]
+def entry_type(p):
+    """What a message is, in plain words (so a person or an AI reading the export never mixes them up)."""
+    if p.get("is_reply"):
+        return "USER'S ANSWER TO THE DEVELOPER'S REPLY"
+    if p.get("crash"):
+        return "FREEZE REPORT" if " froze " in p["crash"][:80] else "CRASH REPORT"
+    return "NEW FEEDBACK: " + (p["kind"] or "Feedback").upper()
+
+
+def build_txt(fb, scope):
+    out = [f"TopBar feedback export ({scope}): {len(fb)} messages", "",
+           "How to read this: each message starts with a line of ===, then TYPE says what it is:",
+           "  NEW FEEDBACK: IDEA / BUG / QUESTION / OTHER  - someone wrote in from TopBar's Feedback window",
+           "  USER'S ANSWER TO THE DEVELOPER'S REPLY      - the developer replied to someone, and this is what they answered back;",
+           "                                                'Answering the developer's reply' quotes what the developer had said",
+           "  CRASH REPORT / FREEZE REPORT                 - sent after TopBar closed unexpectedly or stopped responding; 'Crash details' has where",
+           "STATUS says whether the developer has already replied to this person. The reply code identifies the same person across messages.",
+           "feedback.json has the same messages as structured data.", ""]
     for p in fb:
-        out += [f"=== {p['when']} | {p['kind']} | {p['who']} ({p['code']}) | TopBar {p['version']}" + (" | replied" if p.get("replied") else "")]
-        if p["title"]: out.append("Title: " + p["title"])
-        out += [p["full_text"] or "(nothing written)", "", "PC:", pc_text(p) or "(not sent)"]
+        out += ["=" * 70, f"TYPE: {entry_type(p)}", f"FROM: {p['who'] or 'Anonymous'} (reply code {p['code']})", f"WHEN: {p['when']} UTC | TopBar {p['version']}",
+                "STATUS: " + ("the developer has replied" if p.get("replied") else "not replied yet")]
+        if p.get("answering"): out.append("Answering the developer's reply: " + p["answering"])
+        if p["title"] and not p.get("is_reply"): out.append("Tags/title: " + p["title"])
+        out += ["", "MESSAGE:", p["full_text"] or "(nothing written)", ""]
+        if p.get("crash"): out += ["Crash details:", p["crash"], ""]
+        if p.get("recent"): out.append("Recently used in TopBar: " + p["recent"])
+        out += ["PC:", pc_text(p) or "(not sent)"]
         if p["images"]: out.append("Pictures: " + ", ".join(img_name(p, i, a) for i, a in enumerate(p["images"])))
         out.append("")
     return "\n".join(out)
+
+
+def build_json(fb, scope):
+    keys = ("when", "who", "code", "version", "title", "full_text", "answering", "crash", "recent", "windows", "pc", "link")
+    return json.dumps({"scope": scope, "count": len(fb), "messages": [dict({"type": entry_type(p), "replied": bool(p.get("replied")),
+        "pictures": [img_name(p, i, a) for i, a in enumerate(p["images"])]}, **{k: p.get(k, "") for k in keys}) for p in fb]}, indent=1, ensure_ascii=False, default=str)
 
 
 def build_html(fb):
@@ -555,6 +597,8 @@ def build_html(fb):
     h = [f"<!doctype html><meta charset=utf-8><title>TopBar feedback</title><style>{css}</style>", f"<h1 style='max-width:900px;margin:0 auto 20px'>TopBar feedback · {len(fb)} messages</h1>"]
     for p in fb:
         h.append("<div class=m>")
+        h.append(f"<div class=h style='font-weight:700;color:#0a84ff'>{esc(entry_type(p))}</div>")
+        if p.get("answering"): h.append(f"<div class=h>Answering the developer's reply: “{esc(p['answering'])}”</div>")
         h.append(f"<div class=h>{esc(p['when'])} · {esc(p['kind'])} from {esc(p['who'])} · <code>{esc(p['code'])}</code> · TopBar {esc(p['version'])} · <a href='{p['link']}'>open in Discord</a></div>")
         if p["title"]: h.append(f"<div class=t>{esc(p['title'])}</div>")
         h.append(f"<div class=b>{esc(p['full_text'])}</div><div class=pc>{esc(pc_text(p))}</div>")
@@ -563,15 +607,21 @@ def build_html(fb):
     return "\n".join(h)
 
 
-@tree.command(description="Export all feedback: what people wrote, their PC and their pictures")
-async def export(inter: discord.Interaction):
+@tree.command(description="Export feedback (new since the last export, or everything): what people wrote, their PC and pictures")
+@app_commands.describe(everything="Include everything, not only what came in since your last export")
+async def export(inter: discord.Interaction, everything: bool = False):
     await inter.response.defer(ephemeral=True, thinking=True)   # answer Discord right away (it gives up after 3 seconds)
     if not allowed(inter.user, inter.permissions):
         return await inter.followup.send("Only the developer can export.", ephemeral=True)
     try:
         st = load_state(); fb = await all_feedback()
+        last = int(st.get("last_export_id") or 0)
+        newest = max((p["id"] for p in fb), default=0)
+        if not everything and last:
+            fb = [p for p in fb if p["id"] > last]
+        scope = "everything" if everything or not last else "new since the last export"
         if not fb:
-            return await inter.followup.send("There's no feedback yet.", ephemeral=True)
+            return await inter.followup.send("Nothing new since your last export. Use `everything: True` for all of it." if not everything else "There's no feedback yet.", ephemeral=True)
         async with aiohttp.ClientSession() as s:
             for p in fb:   # long messages come as message.txt: use the whole text
                 p["replied"] = is_replied(p, st); p["full_text"] = p["message"]
@@ -579,7 +629,7 @@ async def export(inter: discord.Interaction):
                     try:
                         async with s.get(p["longtext"].url) as r: p["full_text"] = (await r.text()).strip()
                     except Exception: pass
-            texts = {"feedback.txt": build_txt(fb), "feedback.html": build_html(fb)}
+            texts = {"feedback.txt": build_txt(fb, scope), "feedback.json": build_json(fb, scope), "feedback.html": build_html(fb)}
             zips, LIMIT = [], 9_000_000   # under Discord's upload limit; a message is never split between parts
             def new_zip():
                 b = io.BytesIO(); z = zipfile.ZipFile(b, "w", zipfile.ZIP_DEFLATED)
@@ -599,12 +649,22 @@ async def export(inter: discord.Interaction):
                 cur[2] += need; shots += len(pics)
         for b, z, _ in zips: z.close()
         files = [discord.File(io.BytesIO(b.getvalue()), "topbar-feedback.zip" if len(zips) == 1 else f"topbar-feedback-part{i+1}.zip") for i, (b, z, _) in enumerate(zips)]
-        info = f"{len(fb)} messages from {len({p['code'] for p in fb})} people, {shots} pictures. Open feedback.html in the zip to read them with their pictures."
+        st = load_state(); st["prev_export_id"] = st.get("last_export_id", 0); st["last_export_id"] = max(newest, last); save_state(st)
+        kinds = Counter(entry_type(p).split(":")[0] for p in fb)
+        info = f"**{scope.capitalize()}**: " + ", ".join(f"{n} {k.lower()}" for k, n in kinds.items()) + f". {len(fb)} messages from {len({p['code'] for p in fb})} people, {shots} pictures. Open feedback.html in the zip to read them with their pictures."
         for i in range(0, len(files), 10):
             await inter.followup.send(info if i == 0 else "\u2026more", files=files[i:i + 10], ephemeral=True)
     except Exception as ex:
         print("export failed:", repr(ex))
         await inter.followup.send(f"The export failed: {ex}", ephemeral=True)
+
+
+@tree.command(name="export_undo", description="Undo the last export's 'seen' mark, so the next export includes those messages again")
+async def export_undo(inter: discord.Interaction):
+    if not allowed(inter.user, inter.permissions):
+        return await inter.response.send_message("Only the developer can do that.", ephemeral=True)
+    st = load_state(); st["last_export_id"] = st.get("prev_export_id", 0); save_state(st)
+    await inter.response.send_message("Done: the next export includes the last export's messages again.", ephemeral=True)
 
 
 @tree.command(name="update", description="Get the newest version of this bot now")
