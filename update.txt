@@ -1,7 +1,11 @@
-version=11.0.54
-exe=https://raw.githubusercontent.com/jesse-delman/topbar/5b2658b063ce7cce372843e111a3b80484e9d486/TopBar.exe
-sha256=35e48a25a2f4b94416b74dc9c23201a3ba32b7f2843d3fbd6d72a7ca553b69d1
-notes=Taskbar back to how it was, freeze checker can't close TopBar
+version=11.0.55
+exe=https://raw.githubusercontent.com/jesse-delman/topbar/e037523c93fa5e7486d592eb66bec49095af84f3/TopBar.exe
+sha256=2aa129eb41d69e88a475cded89f9732452bc24763833a88952274ef4dfd5f05e
+notes=Voice commands: global, custom Clips phrases, Shortcuts 'When I say'
+new=Voice commands everywhere
+n2=11.0.55|Voice commands everywhere
+new=Your own voice commands
+n2=11.0.55|Your own voice commands
 new=A real wallpaper library
 n2=11.0.53|A real wallpaper library
 new=Bring your own
